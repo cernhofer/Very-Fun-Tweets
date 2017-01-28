@@ -1,13 +1,16 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+from dotenv import load_dotenv, find_dotenv
+import os
 
-#Variables that contains the user credentials to access Twitter API
-access_token = "30073662-UdrywPW0DZ0KoTeEpkEbfr9Eo84YXhLZ9CMuxX7Jo"
-access_token_secret = "Hkx8GIZnkzYnGgdo39JmkEdrUqrlrc24CaKG7RUJVQm5J"
-consumer_key = "r0CvQ8ZrEHDUo6deY3DWxnQGc"
-consumer_secret = "8j3jhVLlBqmJLX2Cg6AXZZCM9MzNwJN3dYh6qQkMoMNoeUaYvk"
+load_dotenv(find_dotenv())
 
+# Variables that contains the user credentials to access Twitter API
+ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
+CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
+CONSUMER_KEY_SECRET = os.environ.get("CONSUMER_KEY_SECRET")
 
 #This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
@@ -24,9 +27,9 @@ if __name__ == '__main__':
 
     #This handles Twitter authetification and the connection to Twitter Streaming API
     l = StdOutListener()
-    auth = OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
+    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     stream = Stream(auth, l)
 
     #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(track=['#HowToDealWithAnEx', 'howtodealwithanex'])
+    stream.filter(track=['#'])
