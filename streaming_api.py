@@ -40,11 +40,6 @@ class TweetStreamDBListener(StreamListener):
                     'hashtag': hashtag['text'],
                     'tweets': [keys_to_save]
                 })
-            else:
-                print("\t", hashtag)
-
-            # heroku run:detached python streaming_api.py
-            # heroku ps:stop run.2537
 
     def on_error(self, status):
         print("\n\n")
