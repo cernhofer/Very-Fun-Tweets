@@ -31,16 +31,18 @@ class TweetStreamDBListener(StreamListener):
 
         hashtags = tweet_json['entities']['hashtags']
         for hashtag in hashtags:
-            record = db.find_one_and_update(
+            record = self.db.tweets.find_one_and_update(
                 {"hashtag": hashtag['text']},
                 {'$push': {'tweets': keys_to_save}})
 
             if record is None:
-                db.insert({
+                self.db.tweets.insert({
                     'hashtag': hashtag['text'],
                     'tweets': [keys_to_save]
                 })
             print("\t", hashtag)
+
+            # heroku run:detached python streaming_api.py
 
     def on_error(self, status):
         print("\n\n")
@@ -52,11 +54,10 @@ if __name__ == '__main__':
     print("💾  Connecting to database")
     client = MongoClient(MONGODB_URI)
     db = client.get_default_database()
-    tweets = db.tweets
 
     #This handles Twitter authetification and the connection to Twitter Streaming API
     print("🔐  Authenticating with Twitter")
-    listener = TweetStreamDBListener(tweets)
+    listener = TweetStreamDBListener(db)
     auth = OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
