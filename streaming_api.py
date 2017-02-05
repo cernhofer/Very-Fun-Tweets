@@ -14,37 +14,33 @@ CONSUMER_KEY_SECRET = os.environ.get("CONSUMER_KEY_SECRET")
 MONGODB_URI = os.environ.get("MONGODB_URI")
 
 class TweetStreamDBListener(StreamListener):
-    ROOT_KEYS_TO_SAVE = ['created_at', 'id', 'text', 'geo', 'coordinates', \
-    'place', 'retweet_count', 'favorite_count', 'entities', 'timestamp_ms']
-    USER_KEYS_TO_SAVE = ['id', 'screen_name', 'location', 'verified', \
-    'followers_count', 'time_zone', 'lang']
 
     def __init__(self, db):
         self.db = db
 
     def on_data(self, data):
         tweet_json = json.loads(data)
+        keys_to_save = {
+            'id': tweet_json['id'],
+            'created_at': tweet_json['created_at'],
+            'geo': tweet_json['geo'],
+            'coordinates': tweet_json['coordinates'],
+            'place': tweet_json['place'],
+            'verified': tweet_json['user']['verified']
+        }
 
-        data_to_save = {}
-        for key in self.ROOT_KEYS_TO_SAVE:
-            if key in tweet_json:
-                data_to_save[key] = tweet_json[key]
+        hashtags = tweet_json['entities']['hashtags']
+        for hashtag in hashtags:
+            record = db.find_one_and_update(
+                {"hashtag": hashtag['text']},
+                {'$push': {'tweets': keys_to_save}})
 
-        if 'user' in tweet_json:
-            user = tweet_json['user']
-            data_to_save['user'] = {}
-            for key in self.USER_KEYS_TO_SAVE:
-                if key in user:
-                    data_to_save['user'][key] = user[key]
-
-        if 'retweeted_status' in tweet_json or 'quoted_status' in tweet_json:
-            data_to_save['is_retweet'] = True
-        else:
-            data_to_save['is_retweet'] = False
-
-        self.db.insert(data_to_save)
-
-        return True
+            if record is None:
+                db.insert({
+                    'hashtag': hashtag['text'],
+                    'tweets': [keys_to_save]
+                })
+            print("\t", hashtag)
 
     def on_error(self, status):
         print("\n\n")
