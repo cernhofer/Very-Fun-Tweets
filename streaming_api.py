@@ -19,27 +19,30 @@ class TweetStreamDBListener(StreamListener):
         self.db = db
 
     def on_data(self, data):
-        tweet_json = json.loads(data)
-        keys_to_save = {
-            'id': tweet_json['id'],
-            'created_at': tweet_json['created_at'],
-            'geo': tweet_json['geo'],
-            'coordinates': tweet_json['coordinates'],
-            'place': tweet_json['place'],
-            'verified': tweet_json['user']['verified']
-        }
+        try:
+            tweet_json = json.loads(data)
+            keys_to_save = {
+                'id': tweet_json['id'],
+                'created_at': tweet_json['created_at'],
+                'geo': tweet_json['geo'],
+                'coordinates': tweet_json['coordinates'],
+                'place': tweet_json['place'],
+                'verified': tweet_json['user']['verified']
+            }
 
-        hashtags = tweet_json['entities']['hashtags']
-        for hashtag in hashtags:
-            record = self.db.tweets.find_one_and_update(
-                {"hashtag": hashtag['text']},
-                {'$push': {'tweets': keys_to_save}})
+            hashtags = tweet_json['entities']['hashtags']
+            for hashtag in hashtags:
+                record = self.db.tweets.find_one_and_update(
+                    {"hashtag": hashtag['text']},
+                    {'$push': {'tweets': keys_to_save}})
 
-            if record is None:
-                self.db.tweets.insert({
-                    'hashtag': hashtag['text'],
-                    'tweets': [keys_to_save]
-                })
+                if record is None:
+                    self.db.tweets.insert({
+                        'hashtag': hashtag['text'],
+                        'tweets': [keys_to_save]
+                    })
+        except:
+            pass
 
     def on_error(self, status):
         print("\n\n")
