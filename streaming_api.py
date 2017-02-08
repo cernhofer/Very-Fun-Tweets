@@ -62,9 +62,7 @@ if __name__ == '__main__':
     auth = OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
     print("🌊  Starting tweet stream")
     stream = Stream(auth, listener)
-    stream.filter(track=['#'])
 
     print("🌈  Done")
