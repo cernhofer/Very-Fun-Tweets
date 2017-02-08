@@ -24,7 +24,7 @@ class TweetStreamDBListener(StreamListener):
             keys_to_save = {
                 'id': tweet_json['id'],
                 'created_at': tweet_json['created_at'],
-                'tweet_text': tweet_json['text']
+                'tweet_text': tweet_json['text'],
                 'geo': tweet_json['geo'],
                 'coordinates': tweet_json['coordinates'],
                 'place': tweet_json['place'],
