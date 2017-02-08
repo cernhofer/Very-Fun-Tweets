@@ -64,5 +64,6 @@ if __name__ == '__main__':
 
     print("🌊  Starting tweet stream")
     stream = Stream(auth, listener)
+    stream.filter(track=['#'])
 
     print("🌈  Done")
