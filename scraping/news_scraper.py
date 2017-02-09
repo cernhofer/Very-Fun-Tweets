@@ -52,7 +52,8 @@ def get_tf_idf(tf_set):
 	return tf_idf_vectorizer.fit_transform(tf_set)
 
 
-if __name__ == "__main__":
+def scrape_it_good(key_words, *args):
+	'''
 	in_query = ['trump', 'ban', 'judge']
 
 	query = get_query(in_query)
@@ -60,6 +61,9 @@ if __name__ == "__main__":
 	start_date = 7
 	end_date = 8
 	year = 2017
+	'''
+	in_query, month, start_date, end_date, year = args
+	query = get_query(in_query)
 
 	soup = make_soup(URL, query=query, month=2, start_date=7, end_date=7, year=2017)
 
@@ -74,7 +78,7 @@ if __name__ == "__main__":
 
 		twitter_matrix = get_tf_idf([TWITTER_WORDS, text])
 
-		key_word_matrix = get_tf_idf(['ban trump judge', text])
+		key_word_matrix = get_tf_idf([key_words, text])
 
 		twitter_val = cosine_similarity(twitter_matrix[0:1], twitter_matrix)[0][1]
 
@@ -90,6 +94,8 @@ if __name__ == "__main__":
 
 	print(news_list[:3])
 
-
+if __name__ == "__main__":
+	args_to_pass = (['trump', 'ban', 'judge'], 2, 7, 8, 2017)
+	scrape_it_good('ban trump judge', *args_to_pass)
 
 
