@@ -64,6 +64,12 @@ if __name__ == '__main__':
 
     print("🌊  Starting tweet stream")
     stream = Stream(auth, listener)
-    stream.filter(track=['#'])
+    stream.sample()
+
+    # Filter method and parameters, just in case this ever becomes relevant again
+        # stream.filter()
+        # filter_level='medium'
+        # track=['trump']
+        # language=['en']
 
     print("🌈  Done")
