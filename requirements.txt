@@ -1,3 +1,3 @@
--e git://github.com/tweepy/tweepy.git
+-e git://github.com/tweepy/tweepy.git#egg=tweepy
 pymongo==3.4.0
 python-dotenv==0.6.2
