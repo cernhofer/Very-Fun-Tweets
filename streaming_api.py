@@ -12,6 +12,7 @@ ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
 CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
 CONSUMER_KEY_SECRET = os.environ.get("CONSUMER_KEY_SECRET")
 MONGODB_URI = os.environ.get("MONGODB_URI")
+DATABASE_NAME = os.environ.get("DATABASE_NAME")
 
 class TweetStreamDBListener(StreamListener):
 
@@ -53,8 +54,13 @@ class TweetStreamDBListener(StreamListener):
 
 if __name__ == '__main__':
     print("💾  Connecting to database")
+    
     client = MongoClient(MONGODB_URI)
-    db = client.get_default_database()
+    
+    if DATABASE_NAME is None:
+        db = client.get_default_database()
+    else:
+        db = client[DATABASE_NAME]
 
     #This handles Twitter authetification and the connection to Twitter Streaming API
     print("🔐  Authenticating with Twitter")
