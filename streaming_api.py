@@ -42,7 +42,7 @@ class TweetStreamDBListener(StreamListener):
 
                 if record is None:
                     self.db.tweets.insert({
-                        'hashtag': hashtag['text'],
+                        'hashtag': lower_hashtag,
                         'tweets': [keys_to_save]
                     })
         except:
