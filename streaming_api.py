@@ -53,29 +53,34 @@ class TweetStreamDBListener(StreamListener):
 
 
 if __name__ == '__main__':
-    print("💾  Connecting to database")
-    
-    client = MongoClient(MONGODB_URI)
-    
-    if DATABASE_NAME is None:
-        db = client.get_default_database()
-    else:
-        db = client[DATABASE_NAME]
+    while True:
+        try:
+            print("💾  Connecting to database")
 
-    #This handles Twitter authetification and the connection to Twitter Streaming API
-    print("🔐  Authenticating with Twitter")
-    listener = TweetStreamDBListener(db)
-    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+            client = MongoClient(MONGODB_URI)
 
-    print("🌊  Starting tweet stream")
-    stream = Stream(auth, listener)
-    stream.sample()
+            if DATABASE_NAME is None:
+                db = client.get_default_database()
+            else:
+                db = client[DATABASE_NAME]
 
-    # Filter method and parameters, just in case this ever becomes relevant again
-        # stream.filter()
-        # filter_level='medium'
-        # track=['trump']
-        # language=['en']
+            #This handles Twitter authetification and the connection to Twitter Streaming API
+            print("🔐  Authenticating with Twitter")
+            listener = TweetStreamDBListener(db)
+            auth = OAuthHandler(CONSUMER_KEY, CONSUMER_KEY_SECRET)
+            auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-    print("🌈  Done")
+            print("🌊  Starting tweet stream")
+            stream = Stream(auth, listener)
+            stream.sample(languages=['en'])
+
+            # Filter method and parameters, just in case this ever becomes relevant again
+                # stream.filter()
+                # filter_level='medium'
+                # track=['trump']
+                # language=['en']
+
+            print("🌈  Done")
+
+        except:
+            print("⛑  An exception occurred!")
