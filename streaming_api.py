@@ -34,8 +34,10 @@ class TweetStreamDBListener(StreamListener):
 
             hashtags = tweet_json['entities']['hashtags']
             for hashtag in hashtags:
+                lower_hashtag = hashtag['text'].lower()
+                keys_to_save['orig_hashtag'] = hashtag['text']
                 record = self.db.tweets.find_one_and_update(
-                    {"hashtag": hashtag['text']},
+                    {'hashtag': lower_hashtag},
                     {'$push': {'tweets': keys_to_save}})
 
                 if record is None:
