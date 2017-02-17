@@ -123,3 +123,11 @@ STATIC_URL = '/static/'
 # Heroku database setup
 if os.environ.get('DJANGO_ENV', '') == 'production':
     DATABASES['default'] =  dj_database_url.config()
+
+# Debugging collectstatic
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static')
+)
