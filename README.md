@@ -23,3 +23,16 @@ To run mongo, use the `run_mongo` alias (if it exists) or `~/bin/mongodb/bin/mon
  * `use cs122`
  * `db.tweets.count()`
  * `db.tweets.find().limit(1)`
+
+### To run migrations
+ * `python3 manage.py makemigrations`
+ * `python3 manage.py migrate`
+ * To check: `psql cs122`
+ * To run migrations to Heroku: `heroku run python3 django_app/tweets/manage.py migrate`
+
+### To check up on Postgres from Terminal
+ * `heroku run django_app/tweets/manage.py shell`
+ * `from django.conf import settings`
+ * `from django.db import connection`
+ * `from tweet_search.models import Hashtag`
+ * `Hashtag.objects.count()`
