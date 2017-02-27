@@ -1,4 +1,4 @@
--e git://github.com/tweepy/tweepy.git#egg=tweepy
+-e git://github.com/tweepy/tweepy.git@4870918dfeff0a7dd39af2bb30599131b52aa077#egg=tweepy
 pymongo==3.4.0
 python-dotenv==0.6.2
 psycopg2==2.6.2
