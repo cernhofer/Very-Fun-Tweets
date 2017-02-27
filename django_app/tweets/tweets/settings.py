@@ -31,7 +31,8 @@ SECRET_KEY = DJANGO_SECRET
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'murmuring-savannah-25002.herokuapp.com'
+    'murmuring-savannah-25002.herokuapp.com', 
+    'localhost', 
 ]
 
 
