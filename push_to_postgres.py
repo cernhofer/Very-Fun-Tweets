@@ -42,6 +42,7 @@ data = {
         {
             'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=2)).isoformat(),
             'url': 'https://google.com',
+            'headline': 'Heroic cat is the best.',
         }
     ],
 }
