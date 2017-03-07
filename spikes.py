@@ -113,7 +113,7 @@ def spikes(sample_hashtag, threshold=0.2,spikes=1):
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
 
-    return push_to_chelsea,spike_bools, spike_dates, output
+    return push_to_chelsea, spike_dates, output
 
 def get_tweetbuckets(counts_df):
     test = counts_df[['count','datestring']]
