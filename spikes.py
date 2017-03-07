@@ -65,8 +65,9 @@ def change(row):
     return (val-avg)/avg
 
 def spikes(sample_hashtag, threshold=0.01,spikes=1):
-    df = pd.DataFrame.from_dict(sample_hashtag
-                                ['tweets'])
+    hashtag = sample_hashtag['hashtag']
+    print('hashtag', hashtag)
+    df = pd.DataFrame.from_dict(sample_hashtag['tweets'])
 
     df['datetime'] = df.apply (lambda row: extract_datetime (row),axis=1)
     df['datestring'] = df.apply (lambda row: datestring(row), axis=1 )
@@ -110,7 +111,6 @@ def spikes(sample_hashtag, threshold=0.01,spikes=1):
 
     #if push_to_chelsea:
     if has_spike:
-        hashtag = sample_hashtag['hashtag']
         tweetbuckets = get_tweetbuckets(counts_df)
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
