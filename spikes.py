@@ -64,7 +64,7 @@ def change(row):
     avg = row['moving_average']
     return (val-avg)/avg
 
-def spikes(sample_hashtag, threshold=0.2,spikes=1):
+def spikes(sample_hashtag, threshold=0.01,spikes=1):
     df = pd.DataFrame.from_dict(sample_hashtag
                                 ['tweets'])
 
