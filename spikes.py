@@ -90,11 +90,11 @@ def spikes(sample_hashtag, threshold=0.2,spikes=1):
     for i in range(spikes):
         row = counts_df.loc[[i]]
 
-        print(row)
+        # print(row)
         # handle spike boolean
         has_spike = False
         change_d = row.iloc[0]['change']
-        print(change_d)
+        # print(change_d)
         if change_d >= threshold:
             has_spike = True
         if has_spike:

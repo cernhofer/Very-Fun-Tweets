@@ -17,9 +17,11 @@ hashtags = db.tweets.find({})
 for hashtag in hashtags:
     if len(hashtag['tweets']) < 1000: continue
 
+    print("Here is Sush!")
     has_spike, date_list, spike_data = spikes(hashtag)
 
     if has_spike:
+        print("SPIKE!")
         hashtag_name = spike_data['hashtag']
         # get a list of strings of twitter texts
         tweet_text_list = tweet_text(hashtag)
