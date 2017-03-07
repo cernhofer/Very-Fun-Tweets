@@ -15,7 +15,7 @@ db = client[DATABASE_NAME]
 
 hashtags = db.tweets.find({})
 for hashtag in hashtags:
-    if len(hashtag.tweets) < 1000: continue
+    if len(hashtag['tweets']) < 1000: continue
 
     has_spike, date_list, spike_data = spikes(hashtag)
 
