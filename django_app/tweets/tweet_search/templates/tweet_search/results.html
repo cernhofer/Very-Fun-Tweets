@@ -10,14 +10,15 @@
 
 <h2>Tweet buckets</h2>
 <ul>
-  {% for tweet_bucket in hashtag_data.tweetbucket_set.all() %}
+  {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
+    <li>
     <li>{{ tweet_bucket.timestamp }} - {{ tweet_bucket.count }}</li>
   {% endfor %}
 </ul>
 
 <h2>Stories</h2>
 <ul>
-  {% for story in hashtag_data.story_set.all() %}
-    <li>{{ story.timestamp }} - <a href="{{ story.url }}">{{ story.headline }}</a></li>
+  {% for story in hashtag_data.story_set.all %}
+    <li>{{ story.timestamp }} - {{ story.url }} {{ story.headline }}</a></li>
   {% endfor %}
 </ul>
