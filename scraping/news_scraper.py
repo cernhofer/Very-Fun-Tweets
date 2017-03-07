@@ -6,6 +6,7 @@ import re
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
+from tweet_scraper import *
 
 
 
@@ -63,41 +64,40 @@ def scrape_it_good(*args):
 	divs += soup.find_all("div", class_ = "_hnc card-section")
 	news_links = get_news_url(divs)
 
-	#for link in news_links[:3]:
-	'''
-	text1 = get_article_text(news_links[0][1])
-	text2 = get_article_text(news_links[1][1])
-	text3 = get_article_text(news_links[2][1])
-	text4 = get_article_text(news_links[3][1])
-	text5 = get_article_text(news_links[4][1])
-	'''
-
 	twitter_matrix = get_tf_idf([TWITTER_WORDS, get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]), get_article_text(news_links[3][1]), get_article_text(news_links[4][1])])
 	
 	twitter_val = cosine_similarity(twitter_matrix[0:1], twitter_matrix)
 
-	print(twitter_val)
-
 	final_list = []
-	print(len(twitter_val[0]))
 	for i in range(len(twitter_val[0])):
 		if i != 0:
-			print(twitter_val[0][i])
 			if twitter_val[0][i] < 0.025:
-				print('twitter val is', twitter_val[0][i])
 				#it's good and we can keep it on the list 
 				final_list.append(news_links[i-1])
 
-		
+	return final_list[0][0], final_list[0][1]
+
+def get_date(dt_obj):
+	month = str(dt_obj[6])
+	e_date = dt_obj[8:10]
+	s_date = e_date - 1
+	year = str(dt_obj[0:4])
+
+	return year, month, s_date, e_date
+
+def run_baby_run(hashtag, dt, common_words):
+	#to_return = list of dictionaries!!!!!!!!!
+	to_return = []
+	search_words = [hashtag] + common_words
+	for date in dt:
+		year, month, start, end = get_date(dt)  #don't know if this will work!!!
+		args_to_pass = (search_words, month, start, end, year)
+		title, url = scrape_it_good(*args_to_pass)
+		story_dict = {'timstamp': dt, 'url': url, 'healine': title}
+		to_return.append(story_dict)
 
 
-	for thing in final_list:
-		print(thing, "\n\n")
-
-if __name__ == "__main__":
-	#ARGS TO PASS include the query which, in the end, will be the twitter hashtag BUT ALSO the twitter key words!!!
-	args_to_pass = (['trumpban', 'refugees', 'trump', 'politics'], 1, 26, 27, 2017)
-	scrape_it_good(*args_to_pass)
+	return to_return
 
 
 
