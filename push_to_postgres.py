@@ -11,8 +11,6 @@ def push_to_postgres(data):
     # retrieve the CSRF token first
     client.get(REQUEST_URL)
 
-    import pdb; pdb.set_trace()
-    
     csrftoken = client.cookies['csrftoken']
 
     payload = dict(

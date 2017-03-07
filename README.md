@@ -32,7 +32,5 @@ To run mongo, use the `run_mongo` alias (if it exists) or `~/bin/mongodb/bin/mon
 
 ### To check up on Postgres from Terminal
  * `heroku run django_app/tweets/manage.py shell`
- * `from django.conf import settings`
- * `from django.db import connection`
  * `from tweet_search.models import Hashtag`
  * `Hashtag.objects.count()`
