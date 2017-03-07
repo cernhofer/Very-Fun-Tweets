@@ -99,6 +99,7 @@ def spikes(sample_hashtag, threshold=0.01,spikes=1):
     # handle spike boolean
     has_spike = False
     change_d = counts_df.iloc[0]['change']
+    print(counts_df['change'])
     print('change:::::::::::::::::::::::', change_d)
     # print(change_d)
     if change_d >= threshold:
