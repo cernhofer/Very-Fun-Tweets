@@ -13,7 +13,7 @@ DATABASE_NAME = os.environ.get("DATABASE_NAME")
 client = MongoClient(MONGODB_URI)
 db = client[DATABASE_NAME]
 
-hashtags = db.tweets.all()
+hashtags = db.tweets.find({})
 for hashtag in hashtags:
     if len(hashtag.tweets) < 1000: continue
 
