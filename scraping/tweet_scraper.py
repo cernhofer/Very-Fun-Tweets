@@ -40,10 +40,8 @@ def scrape_tweet(word_string, word_list):
 						#add to the list
 						word_list.append(re.sub('[^a-zA-Z]+', '', word))
 					else:
-						print(word, "is not a noun")
 						if word[-1] == "s":
 							if word[:-1] in nouns:
-								print("EXCEPT MAYBE IT IS!!!!! :O\n\n\n")
 								word_list.append(re.sub('[^a-zA-Z]+', '', word))
 
 						#word_list.append(word)

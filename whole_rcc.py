@@ -6,14 +6,6 @@ from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
 import os, json
 
-def tweet_text(hashtag):
-    tweet_text_list = []
-    tweets = hashtag['tweets']
-    for tweet in tweets:
-        tweet_text_list.append(tweet['tweet_text'])
-
-    return tweet_text_list
-
 load_dotenv(find_dotenv())
 MONGODB_URI = os.environ.get("MONGODB_URI")
 DATABASE_NAME = os.environ.get("DATABASE_NAME")
@@ -26,16 +18,16 @@ for hashtag in hashtags:
     if len(hashtag['tweets']) < 1000: continue
 
     print("Here is Sush!")
-    has_spike, date_list, spike_data = spikes(hashtag)
+    has_spike, date_list, spike_data, tweet_text_list = spikes(hashtag)
 
     if has_spike:
         print("SPIKE!")
         hashtag_name = spike_data['hashtag']
         print(hashtag_name)
-        # get a list of strings of twitter texts
-        tweet_text_list = tweet_text(hashtag)
         # pass to tweet scraping
         common_words = run_for_your_life(tweet_text_list)
+        # fix later when have more than one spike
+        common_words = [common_words]
         # pass to news scraping
         spike_data['stories'] = run_baby_run(hashtag_name, date_list, common_words)
 
