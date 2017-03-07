@@ -4,6 +4,8 @@ from django.template import loader
 from django.http import Http404
 from django.middleware import csrf
 import json
+from django.core.exceptions import ObjectDoesNotExist
+from Hashtag.models import Hashtag
 
 
 from tweet_search.models import Hashtag, TweetBucket, Story
@@ -14,13 +16,15 @@ def index(request):
 def results(request):
 	search_term = request.GET.get('search_term')
 
-	print("\n\n\n\n")
-	print(search_term)
-
-	print("\n\n\n\n")
+	hashtag_data = None
+    try:
+        hashtag_data = Hashtag.objects.get(name=search_term)
+    except ObjectDoesNotExist:
+		pass
 
 	context = {
 		'search_term': search_term,
+		'hashtag_data': hashtag_data,
 	}
 
 	return render(request, 'tweet_search/results.html', context)
