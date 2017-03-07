@@ -50,7 +50,7 @@ def datestring(tweet):
     return str(x)[0:10]
 
 def moving_average(row):
-    global prev_avg
+    #global prev_avg
     alpha = 1/row['n']
     new_avg = (1-alpha)*prev_avg + alpha*row['count']
     prev_avg = new_avg
@@ -67,7 +67,7 @@ def change(row):
 def spikes(sample_hashtag, threshold=0.2,spikes=1):
     df = pd.DataFrame.from_dict(sample_hashtag
                                 ['tweets'])
-
+    hashtag = sample_hashtag['hashtag']
     df['datetime'] = df.apply (lambda row: extract_datetime (row),axis=1)
     df['datestring'] = df.apply (lambda row: datestring(row), axis=1 )
 
