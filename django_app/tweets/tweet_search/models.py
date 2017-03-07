@@ -14,6 +14,7 @@ class TweetBucket(models.Model):
 class Story(models.Model):
     timestamp = models.DateTimeField()
     url = models.URLField()
+    headline = models.TextField()
     hashtag = models.ForeignKey(Hashtag, on_delete=models.CASCADE)
 
     class Meta:

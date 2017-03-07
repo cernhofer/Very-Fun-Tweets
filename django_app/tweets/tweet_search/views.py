@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from django.template import loader 
+from django.template import loader
 from django.http import Http404
+from django.middleware import csrf
 import json
 
 
@@ -31,7 +32,7 @@ def search(request):
 def populate(request):
     if request.method == 'GET':
         csfr.get_token(request)
-        return HrrpResponse('ok')
+        return HttpResponse('ok')
 
     payload = json.loads(request.POST.get('payload'))
 
