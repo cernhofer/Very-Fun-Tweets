@@ -6,8 +6,6 @@ import re
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
-from tweet_scraper import *
-
 
 
 URL = 'https://www.google.com/search?cf=all&hl=en&pz=1&ned=en_ph&tbm=nws&gl=ph&as_q={query}&as_occt=any&as_drrb=b&as_mindate={month}%2F{start_date}%2F{year}&as_maxdate={month}%2F{end_date}%2F{year}&tbs=cdr%3A1%2Ccd_min%3A{month}%2F{start_date}%2F{year}%2Ccd_max%3A{month}%2F{end_date}%2F{year}&authuser=0' 
@@ -90,10 +88,10 @@ def run_baby_run(hashtag, dt, common_words):
 	to_return = []
 	search_words = [hashtag] + common_words
 	for date in dt:
-		year, month, start, end = get_date(dt)  #don't know if this will work!!!
+		year, month, start, end = get_date(date)  #don't know if this will work!!!
 		args_to_pass = (search_words, month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
-		story_dict = {'timstamp': dt, 'url': url, 'healine': title}
+		story_dict = {'timstamp': date, 'url': url, 'healine': title}
 		to_return.append(story_dict)
 
 
