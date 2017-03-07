@@ -19,6 +19,6 @@
 <h2>Stories</h2>
 <ul>
   {% for story in hashtag_data.story_set.all %}
-    <li>{{ story.timestamp }} - <a href="{{ story.url }}">{{ story.headline }}</a></li>
+    <li>{{ story.timestamp }} - <a href={{ story.url }}>{{ story.headline }}</a></li>
   {% endfor %}
 </ul>
