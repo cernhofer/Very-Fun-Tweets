@@ -4,6 +4,7 @@ from scraping.tweet_scraper import run_for_your_life
 from spikes import spikes
 from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
+import os, json
 
 load_dotenv(find_dotenv())
 MONGODB_URI = os.environ.get("MONGODB_URI")
