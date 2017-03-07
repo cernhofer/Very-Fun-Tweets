@@ -31,7 +31,7 @@ def search(request):
 
 def populate(request):
     if request.method == 'GET':
-        csfr.get_token(request)
+        csrf.get_token(request)
         return HttpResponse('ok')
 
     payload = json.loads(request.POST.get('payload'))
