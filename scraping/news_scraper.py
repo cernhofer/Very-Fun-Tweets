@@ -86,15 +86,16 @@ def get_date(dt_obj):
 def run_baby_run(hashtag, dt, common_words):
 	#to_return = list of dictionaries!!!!!!!!!
 	to_return = []
-	search_words = [hashtag] + common_words
-	for date in dt:
+	
+	for i, date in enumerate(dt):
 		year, month, start, end = get_date(date)  #don't know if this will work!!!
+		search_words = [hashtag] + common_words[i]
 		args_to_pass = (search_words, month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
 		story_dict = {'timstamp': date, 'url': url, 'healine': title}
 		to_return.append(story_dict)
 
-
+	print(to_return)
 	return to_return
 
 
