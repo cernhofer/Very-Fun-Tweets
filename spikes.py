@@ -97,17 +97,23 @@ def spikes(sample_hashtag, threshold=0.2,spikes=1):
         print(change_d)
         if change_d >= threshold:
             has_spike = True
-        spike_bools.append(has_spike)
-        # handle spike date
-        spike_dates.append(row.iloc[0]['datestring'])
+        if has_spike:
+            spike_bools.append(has_spike)
+            # handle spike date
+            spike_dates.append(row.iloc[0]['datestring'])
 
-    hashtag = sample_hashtag['hashtag']
-    tweetbuckets = get_tweetbuckets(counts_df)
-
+    push_to_chelsea = False
+    if True in spike_bools:
+        push_to_chelsea = True
     output={}
-    output['hashtag'] = hashtag
-    output['tweetbuckets'] = tweetbuckets
-    return spike_bools, spike_dates, output
+
+    if push_to_chelsea:
+        hashtag = sample_hashtag['hashtag']
+        tweetbuckets = get_tweetbuckets(counts_df)
+        output['hashtag'] = hashtag
+        output['tweetbuckets'] = tweetbuckets
+
+    return push_to_chelsea,spike_bools, spike_dates, output
 
 def get_tweetbuckets(counts_df):
     test = counts_df[['count','datestring']]
