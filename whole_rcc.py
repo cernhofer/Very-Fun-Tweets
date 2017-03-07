@@ -1,25 +1,29 @@
 from push_to_postgres import push_to_postgres
-from scraping.news_scraper import * # find out name of function
+from scraping.news_scraper import run_baby_run
+from scraping.tweet_scraper import run_for_your_life
+from spikes import spikes
 
 hashtags = db.tweets.all()
 for hashtag in hashtags:
     if len(hashtag.tweets) < 1000: continue
 
-    has_spike, spike_data = sush_script(hashtag) # returns bool
+    has_spike, date_list, spike_data = spikes(hashtag)
+    hashtag_name = spike_data['hashtag']
 
     if has_spike:
-        # data = prepare_data(hashtag) # outputs a formatted data object
-        spike_data['stories'] = chelsea_script(hashtag) # or pass the spike data
-        push_to_postgres(data)
-    elif is_in_list(hashtag):
-        # have this push to postgres if hashtag is on list of previously pushed hashtags
-        # no need to call chelsea_script, need to handle for no stories bc postgres?
-        push_to_postgres(data)
+        # get a list of strings of twitter texts
+        tweet_text_list = tweet_text(hashtag)
+        # pass to tweet scraping
+        common_words = run_for_your_life(tweet_text_list)
+        # pass to news scraping
+        spike_data['stories'] = run_baby_run(hashtag_name, date_list, common_words) # ask what chelsea needs
 
+        push_to_postgres(spike_data)
 
-def is_in_list(hashtag):
-    # create a list to be stored in mongo and check if hashtag is in there
-    # returns bool
+def tweet_text(hashtag):
+    tweet_text_list = []
+    tweets = hashtag['tweets']
+    for tweet in tweets:
+        tweet_text_list.append(tweet['tweet_text'])
 
-def add_to_list(hashtag):
-    # write this
+    return tweet_text_list

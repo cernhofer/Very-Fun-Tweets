@@ -9,6 +9,7 @@ import collections
 import string
 from collections import Counter
 from nltk.corpus import wordnet as wn
+import pandas as pd
 
 TEST = ["#HowToDealWithAnEx get a puppy. \n\nThere, how easy was that?", "RT @therealjuicyj: #HowToDealWithAnEx  pull at the RBBTOUR &amp; get HOTBOXED", "#HowToDealWithAnEx I wouldn't know. All of mine have mysteriously disappeared.", "#HowToDealWithAnEx just leave it near the end of the alphabet - where it belongs.", "#HowToDealWithAnEx Adopt a cat and receive true love. https:\/\/t.co\/IfdN87Mp5e", "#HowToDealWithAnEx O.J. Simpson \ud83d\ude02\ud83d\ude37", "#HowToDealWithAnEx\n\nJust.Fucking.Don't", "When someone mentions my ex... #HowToDealWithAnEx https:\/\/t.co\/pjPxTE3Ums", "#HowToDealWithAnEx\n\nLive a happy, successful life.."]
 
@@ -24,6 +25,8 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'wa
 #test is a list of tweet bodies 
 
 #scrape out 
+
+tweets_data_path = 'test_data.txt'
 
 def scrape_tweet(word_string, word_list):
 	nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
@@ -50,14 +53,29 @@ def printpretty(listt):
 	for thing in listt:
 		print(thing)
 
-if __name__ == '__main__':
+
+def run_for_your_life(hashtag_list):
 	word_list = []
-	for thing in test: #for each text string in the list of text strings
-		scrape_tweet(thing, word_list) 
+	for tweet_text in hashtag_list:
+		scrape_tweet(tweet_text, word_list)
+
+	c = Counter(word_list).most_common(3)
+	test = list(c)
+
+	to_return = []
+	for thing in test:
+		to_return.append(thing[0])
+
+	return to_return
 
 
-	#printpretty(word_list)
 
-	print(Counter(word_list).most_common(5))
+
+
+
+
+
+
+
 
 

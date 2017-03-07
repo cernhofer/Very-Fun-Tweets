@@ -37,6 +37,9 @@ def populate(request):
     payload = json.loads(request.POST.get('payload'))
 
     # Delete any old data that exists
+	hashtag_in_db = Hashtag.objects.filter(name=payload.get('hashtag'))
+	hashtag_in_db.all().delete()
+
     hashtag = Hashtag(name=payload.get('hashtag'))
     hashtag.save()
 
