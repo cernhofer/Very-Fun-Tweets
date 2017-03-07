@@ -23,6 +23,7 @@ for hashtag in hashtags:
     if has_spike:
         print("SPIKE!")
         hashtag_name = spike_data['hashtag']
+        print(hashtag_name)
         # get a list of strings of twitter texts
         tweet_text_list = tweet_text(hashtag)
         # pass to tweet scraping

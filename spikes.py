@@ -103,7 +103,7 @@ def spikes(sample_hashtag, threshold=0.2,spikes=1):
             spike_dates.append(row.iloc[0]['datestring'])
 
     push_to_chelsea = False
-    if True in spike_bools:
+    if spike_bools[0]:
         push_to_chelsea = True
     output={}
 
@@ -113,6 +113,7 @@ def spikes(sample_hashtag, threshold=0.2,spikes=1):
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
 
+    print("Boolean", push_to_chelsea)
     return push_to_chelsea, spike_dates, output
 
 def get_tweetbuckets(counts_df):
