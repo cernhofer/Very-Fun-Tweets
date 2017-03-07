@@ -6,6 +6,14 @@ from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
 import os, json
 
+def tweet_text(hashtag):
+    tweet_text_list = []
+    tweets = hashtag['tweets']
+    for tweet in tweets:
+        tweet_text_list.append(tweet['tweet_text'])
+
+    return tweet_text_list
+
 load_dotenv(find_dotenv())
 MONGODB_URI = os.environ.get("MONGODB_URI")
 DATABASE_NAME = os.environ.get("DATABASE_NAME")
@@ -32,11 +40,3 @@ for hashtag in hashtags:
         spike_data['stories'] = run_baby_run(hashtag_name, date_list, common_words)
 
         push_to_postgres(spike_data)
-
-def tweet_text(hashtag):
-    tweet_text_list = []
-    tweets = hashtag['tweets']
-    for tweet in tweets:
-        tweet_text_list.append(tweet['tweet_text'])
-
-    return tweet_text_list

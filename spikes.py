@@ -34,18 +34,18 @@ def get_tweetbuckets(counts_df):
     return tweetbuckets
 
 def spikes(sample_hashtag,tolerance=0.2,spikes=1):
-    df = pd.DataFrame.from_dict(sample_hashtag
-                                ['tweets'])
+    df = pd.DataFrame.from_dict(sample_hashtag['tweets'])
+
     hashtag = sample_hashtag['hashtag']
     print("the hashtag is ",hashtag)
+
     df['datetime'] = df.apply (lambda row: extract_datetime(row),axis=1)
     df['datestring'] = df.apply (lambda row: datestring(row), axis=1 )
     counts = df['datestring'].value_counts()
     counts_df = pd.Series.to_frame(counts)
     counts_df['index'] = counts_df.index
     counts_df.columns = ['count','datestring']
-    counts_df = counts_df.sort('datestring')
-
+    counts_df = counts_df.sort_values(by='datestring')
 
     counts_df = counts_df.reset_index()
     counts_df = counts_df.drop(['index'],axis = 1)
@@ -54,7 +54,7 @@ def spikes(sample_hashtag,tolerance=0.2,spikes=1):
     prev_avg = 0
     counts_df['moving_average'] = counts_df.apply (lambda row: moving_average(row), axis=1 )
     counts_df['change'] = counts_df.apply (lambda row: change(row), axis=1 )
-    counts_df.sort('change', ascending=False)
+
     has_spike = False
     spike_index = counts_df['change'].idxmax(axis=0, skipna=True)
     change_d = counts_df.iloc[spike_index]['change']
