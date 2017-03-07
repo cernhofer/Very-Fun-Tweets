@@ -50,7 +50,7 @@ def datestring(tweet):
     return str(x)[0:10]
 
 def moving_average(row):
-    # global prev_avg
+    global prev_avg
     alpha = 1/row['n']
     print('alpha value', alpha)
     new_avg = (1-alpha)*prev_avg + alpha*row['count']
@@ -85,7 +85,7 @@ def spikes(sample_hashtag, threshold=0.01,spikes=1):
     counts_df['index'] = counts_df.index
 
     counts_df['n'] = counts_df.apply (lambda row: plus_one(row), axis=1 )
-    # prev_avg = 0
+    prev_avg = 0
     counts_df['moving_average'] = counts_df.apply (lambda row: moving_average(row), axis=1 )
     counts_df['change'] = counts_df.apply (lambda row: change(row), axis=1 )
 
