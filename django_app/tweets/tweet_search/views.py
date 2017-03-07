@@ -5,9 +5,6 @@ from django.http import Http404
 from django.middleware import csrf
 import json
 from django.core.exceptions import ObjectDoesNotExist
-from Hashtag.models import Hashtag
-
-
 from tweet_search.models import Hashtag, TweetBucket, Story
 
 def index(request):
@@ -17,9 +14,9 @@ def results(request):
 	search_term = request.GET.get('search_term')
 
 	hashtag_data = None
-    try:
-        hashtag_data = Hashtag.objects.get(name=search_term)
-    except ObjectDoesNotExist:
+	try:
+		hashtag_data = Hashtag.objects.get(name=search_term)
+	except ObjectDoesNotExist:
 		pass
 
 	context = {
