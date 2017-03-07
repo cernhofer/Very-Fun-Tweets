@@ -7,7 +7,6 @@ gunicorn==19.6.0
 django==1.10.5
 requests==2.13.0
 bs4==4.5.3
-re==2.2.1
 sklearn==0.18.1
 pandas==0.19.2
 nltk==3.2.2
