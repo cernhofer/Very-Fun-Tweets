@@ -5,7 +5,7 @@ import json
 import sys
 import csv
 import pdb
-import collections 
+import collections
 import string
 from collections import Counter
 from nltk.corpus import wordnet as wn
@@ -22,9 +22,9 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'wa
                     'such',  'that',  'the',  'their',  'this',  'through',  'to',
                     'we', 'were', 'which', 'will', 'with', 'yet', 'rt', 'mr', ])
 
-#test is a list of tweet bodies 
+#test is a list of tweet bodies
 
-#scrape out 
+#scrape out
 
 tweets_data_path = 'test_data.txt'
 
@@ -67,15 +67,3 @@ def run_for_your_life(hashtag_list):
 		to_return.append(thing[0])
 
 	return to_return
-
-
-
-
-
-
-
-
-
-
-
-

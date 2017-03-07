@@ -1,12 +1,11 @@
 import pandas as pd
 import json
 from datetime import datetime
-
+prev_avg = 0
 
 tweets_data_path = 'reference_info/sample_data.txt'
 
-
-def generate_tweets_df(tweets_data_path)
+def generate_tweets_df(tweets_data_path):
     tweets_data = []
     tweets_file = open(tweets_data_path, "r")
     for line in tweets_file:
@@ -19,9 +18,6 @@ def generate_tweets_df(tweets_data_path)
     tweets['text'] = map(lambda tweet: tweet['text'], tweets_data)
     return tweets
 
-
-#test = pd.DataFrame.from_dict(sample_hashtag['tweets'])
-# 2017-02-14 02:25:33
 def extract_datetime(tweet):
     return datetime.strptime(tweet['created_at'], "%a %b %d %H:%M:%S +0000 %Y")
 
@@ -68,7 +64,7 @@ def change(row):
     avg = row['moving_average']
     return (val-avg)/avg
 
-def spikes(sample_hashtag, threshold=0.2):
+def spikes(sample_hashtag, threshold=0.2,spikes=1):
     df = pd.DataFrame.from_dict(sample_hashtag
                                 ['tweets'])
 
@@ -88,10 +84,35 @@ def spikes(sample_hashtag, threshold=0.2):
     counts_df['moving_average'] = counts_df.apply (lambda row: moving_average(row), axis=1 )
     counts_df['change'] = counts_df.apply (lambda row: change(row), axis=1 )
 
-    max_row = counts_df.loc[counts_df['change'].idxmax()]
-    max_change = max_row['change']
-    max_date = max_row['datestring']
-    spike_bool = False
-    if max_change >= threshold:
-        spike_bool = True
-    return spike_bool, max_date, counts_df
+    counts_df.sort('change', ascending=False)
+    spike_bools = []
+    spike_dates = []
+    for i in range(spikes):
+        row = counts_df.loc[[i]]
+
+        print(row)
+        # handle spike boolean
+        has_spike = False
+        change_d = row.iloc[0]['change']
+        print(change_d)
+        if change_d >= threshold:
+            has_spike = True
+        spike_bools.append(has_spike)
+        # handle spike date
+        spike_dates.append(row.iloc[0]['datestring'])
+
+    hashtag = sample_hashtag['hashtag']
+    tweetbuckets = get_tweetbuckets(counts_df)
+
+    output={}
+    output['hashtag'] = hashtag
+    output['tweetbuckets'] = tweetbuckets
+    return spike_bools, spike_dates, output
+
+def get_tweetbuckets(counts_df):
+    test = counts_df[['count','datestring']]
+    tweetbuckets = []
+    for index,row in test.iterrows():
+        dictionary = pd.Series.to_dict(row)
+        tweetbuckets.append(dictionary)
+    return tweetbuckets
