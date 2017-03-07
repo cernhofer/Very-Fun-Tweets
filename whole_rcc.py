@@ -8,6 +8,7 @@ import os, json
 
 load_dotenv(find_dotenv())
 MONGODB_URI = os.environ.get("MONGODB_URI")
+DATABASE_NAME = os.environ.get("DATABASE_NAME")
 
 client = MongoClient(MONGODB_URI)
 db = client[DATABASE_NAME]
