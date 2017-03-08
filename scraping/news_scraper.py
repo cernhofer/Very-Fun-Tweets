@@ -25,7 +25,6 @@ def get_query(input_query):
 	else:
 		return_query = input_query[0]
 
-	print("query is", return_query)
 	return return_query
 
 def make_soup(url, **params):
@@ -118,11 +117,3 @@ def run_baby_run(hashtag, dt, common_words):
 
 	print("\n\nNEWS ARTICLE:", to_return)
 	return to_return
-
-
-
-
-
-if __name__ == "__main__":
-	args_to_pass = (['supergirl, episode, musical, alex'], 3, 6, 7, 2017)
-	title, url = scrape_it_good(*args_to_pass)
