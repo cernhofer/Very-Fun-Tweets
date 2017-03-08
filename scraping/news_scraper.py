@@ -90,7 +90,7 @@ def run_baby_run(hashtag, dt, common_words):
 
 	for i, date in enumerate(dt):
 		year, month, start, end = get_date(date)  #don't know if this will work!!!
-		search_words = [hashtag] + common_words[i]
+		search_words = [hashtag] + common_words
 		args_to_pass = (search_words, month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
 		story_dict = {'timstamp': date, 'url': url, 'healine': title}
