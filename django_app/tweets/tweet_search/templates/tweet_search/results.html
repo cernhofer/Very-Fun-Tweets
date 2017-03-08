@@ -1,24 +1,63 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
 
-<div class = "jumotron">
-<h2>HERE ARE WHERE THE RESULTS OF THE SEARCH ARE GOING TO LIVE</h2>
+<div class="container">
+  <h2>RESULTS FOR #{{ hashtag_data.name }}</h2>
+
+  <p>You searched for {{ search_term }}</p>
+
+  <div id="chart"></div>
+
+  <h2>Tweet buckets</h2>
+  <ul>
+    {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
+      <li>
+      <li>{{ tweet_bucket.timestamp }} - {{ tweet_bucket.count }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Stories</h2>
+  <ul>
+    {% for story in hashtag_data.story_set.all %}
+      <li>{{ story.timestamp }} - {{ story.url }} {{ story.headline }}</li>
+    {% endfor %}
+  </ul>
 </div>
 
-<p>You searched for {{ search_term }}</p>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 
-<h1>Results for {{ hashtag_data.name }}</h1>
-
-<h2>Tweet buckets</h2>
-<ul>
-  {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
-    <li>
-    <li>{{ tweet_bucket.timestamp }} - {{ tweet_bucket.count }}</li>
-  {% endfor %}
-</ul>
-
-<h2>Stories</h2>
-<ul>
-  {% for story in hashtag_data.story_set.all %}
-    <li>{{ story.timestamp }} - {{ story.url }} {{ story.headline }}</li>
-  {% endfor %}
-</ul>
+<script>
+$(function () {
+  var myChart = Highcharts.chart('chart', {
+    chart: {
+      type: 'spline'
+    },
+    title: {
+      text: '#{{ hashtag_data.name }} over time'
+    },
+    legend: {
+      enabled: false,
+    },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        formatter: function() {
+            return Highcharts.dateFormat('%d %b %Y', this.value)
+        }
+      },
+    },
+    series: [{
+      tooltip: {
+        pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y}</b><br/>'
+      },
+      data: [
+        [Date.parse('2017-02-01'), 20],
+        [Date.parse('2017-02-03'), 200],
+        [Date.parse('2017-02-04'), 65],
+        [Date.parse('2017-02-07'), 122],
+        [Date.parse('2017-02-20'), 150],
+      ]
+    }]
+  });
+});
+</script>
