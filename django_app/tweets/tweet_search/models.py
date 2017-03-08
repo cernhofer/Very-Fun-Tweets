@@ -8,6 +8,9 @@ class TweetBucket(models.Model):
     count = models.IntegerField()
     hashtag = models.ForeignKey(Hashtag, on_delete=models.CASCADE)
 
+    def formatted_timestamp(self):
+        return self.timestamp.strftime("%Y-%m-%d")
+
     class Meta:
         ordering = ('timestamp',)
 

@@ -51,11 +51,9 @@ $(function () {
         pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y}</b><br/>'
       },
       data: [
-        [Date.parse('2017-02-01'), 20],
-        [Date.parse('2017-02-03'), 200],
-        [Date.parse('2017-02-04'), 65],
-        [Date.parse('2017-02-07'), 122],
-        [Date.parse('2017-02-20'), 150],
+        {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
+        [Date.parse('{{ tweet_bucket.formatted_timestamp }}'), {{ tweet_bucket.count }}],
+        {% endfor %}
       ]
     }]
   });
