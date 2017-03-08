@@ -18,11 +18,11 @@ hashtag_count = 0
 hashtags = db.tweets.find({})
 for hashtag in hashtags:
     hashtag_count += 1
-    print("This is hashtag number", hashtag_count)
+    print("\n\n\nThis is hashtag number", hashtag_count)
 
     if len(hashtag['tweets']) < 1000: continue
 
-    print("\n\n\nHere is Sush!")
+    print("Here is Sush!")
     has_spike, date_list, spike_data, tweet_text_list = spikes(hashtag)
 
     if has_spike:
