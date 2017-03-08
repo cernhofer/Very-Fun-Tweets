@@ -14,7 +14,7 @@ TWITTER_WORDS = 'twitter hashtag trending tweeted tweet'
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'}
 
 
-def get_query(input_query):
+def get_query(input_query, ban_word):
 	return_query = ''
 	if len(input_query) > 1:
 		for word in input_query:
@@ -22,6 +22,9 @@ def get_query(input_query):
 				return_query += word
 			else:
 				return_query += "+" + word
+			if word in TWITTER_WORDS:
+				#if one of the main words/hashtag is about twitter- don't take it out later
+				ban_word = False
 	else:
 		return_query = input_query[0]
 
@@ -46,7 +49,7 @@ def get_news_url(div):
 			cleaned = re.search('(http)[^&]*', thing['href']).group()
 			title =	thing.text
 
-			urls.append((title, cleaned))
+			urls.append([title, cleaned])
 
 			print(title, cleaned)
 
@@ -61,11 +64,18 @@ def get_article_text(link):
 
 	return link_text
 
-def get_tf_idf(tf_set):
+def get_tf_matrix(tf_set):
 	tf_idf_vectorizer = TfidfVectorizer()
 	return tf_idf_vectorizer.fit_transform(tf_set)
 
+def check_tf_idf(doc1, doc2, doc3, terms= TWITTER_WORDS):
+    matrix = get_tf_matrix([terms, doc1, doc2, doc3])
+    val = cosine_similarity(matrix[0:1], matrix)
+
+    return val
+
 def scrape_it_good(*args):
+	ban_twitter = True
 	in_query, month, start_date, end_date, year = args
 	query = get_query(in_query)
 	soup = make_soup(URL, query=query, month=month, start_date=start_date, end_date=end_date, year=year)
@@ -79,16 +89,23 @@ def scrape_it_good(*args):
 		print("NOT ENOUGH NEWS ARTICLES")
 		return None, None
 
-	twitter_matrix = get_tf_idf([TWITTER_WORDS, get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1])])
-
-	twitter_val = cosine_similarity(twitter_matrix[0:1], twitter_matrix)
-
 	final_list = []
-	for i in range(len(twitter_val[0])):
+
+	key_words_val = check_tf_idf(get_article_text(news_links[0][1]),get_article_text(news_links[1][1]),get_article_text(news_links[2][1]), common_words)
+	
+	if ban_twitter:
+		twitter_val = check_tf_idf(get_article_text(news_links[0][1]),get_article_text(news_links[1][1]),get_article_text(news_links[2][1]))
+
+	for i in range(len(key_word_val[0])):
 		if i != 0:
-			if twitter_val[0][i] < 0.025:
-				#it's good and we can keep it on the list
-				final_list.append(news_links[i-1])
+			if ban_twitter:
+				if twitter_val[0][i] < 0.025:
+					#it's good and we can keep it on the list
+					final_list.append(news_links[i-1] + [key_words_val[0][i]])
+			else:
+				final_list.append(news_links[i-1] + [key_words_val[0][i]])
+
+	final_list.sort(key=lambda X: x[2], reverse= True)
 
 	return final_list[0][0], final_list[0][1]
 
@@ -118,3 +135,9 @@ def run_baby_run(hashtag, dt, common_words):
 
 	print("\n\nNEWS ARTICLE:", to_return)
 	return to_return
+
+
+
+
+
+
