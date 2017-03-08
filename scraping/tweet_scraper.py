@@ -45,11 +45,11 @@ def scrape_tweet(word_string, word_list):
 							#if word[:-1] in nouns:
 								#print("EXCEPT MAYBE IT IS!!!!! :O\n\n\n")
 								#word_list.append(re.sub('[^a-zA-Z]+', '', word))
-						word_list.append(re.sub('[^a-zA-Z]+', '', word))
-					else:
-						if word[-1] == "s":
-							if word[:-1] in nouns:
-								word_list.append(re.sub('[^a-zA-Z]+', '', word))
+						#word_list.append(re.sub('[^a-zA-Z]+', '', word))
+					#else:
+						#if word[-1] == "s":
+							#if word[:-1] in nouns:
+								#word_list.append(re.sub('[^a-zA-Z]+', '', word))
 
 						#word_list.append(word)
 
