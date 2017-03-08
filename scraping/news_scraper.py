@@ -79,7 +79,7 @@ def get_date(dt_obj):
 	print(dt_obj)
 	month = str(dt_obj[6])
 	e_date = dt_obj[8:10]
-	s_date = e_date - 1
+	s_date = int(e_date) - 1
 	year = str(dt_obj[0:4])
 
 	return year, month, s_date, e_date
