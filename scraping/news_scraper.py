@@ -27,7 +27,7 @@ def get_query(input_query):
 	return return_query
 
 def make_soup(url, **params):
-	response = requests.get(url.format(**params), headers = HEADERS)
+	response = requests.get(url.format(**params), headers = HEADERS, verify=False)
 	return bs4.BeautifulSoup(response.text, "html5lib")
 
 def get_news_url(div):
