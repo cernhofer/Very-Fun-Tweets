@@ -25,10 +25,12 @@ for hashtag in hashtags:
         hashtag_name = spike_data['hashtag']
         print(hashtag_name)
         # pass to tweet scraping
-        common_words = run_for_your_life(tweet_text_list)
+        # common_words = run_for_your_life(tweet_text_list)
         # fix later when have more than one spike
-        common_words = [common_words]
+        common_words = []
         # pass to news scraping
+        print('Calling run_baby_run')
         spike_data['stories'] = run_baby_run(hashtag_name, date_list, common_words)
 
+        print('Pushing to postgres')
         push_to_postgres(spike_data)
