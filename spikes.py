@@ -78,4 +78,4 @@ def spikes(sample_hashtag,tolerance=0.2,spikes=1):
 
         return has_spike, spike_date, output, tweet_text_list
 
-    return has_spike, spike_date, output, None
+    return has_spike, None, None, None
