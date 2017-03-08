@@ -34,11 +34,15 @@ def scrape_tweet(word_string, word_list):
 			word = word.lower()
 			word = ''.join(x for x in word if x in string.printable)
 			if word not in INDEX_IGNORE:
-				if not re.match(r'^#', word) and not re.match(r'^@', word) and not re.match(r'^https', word) and not re.match(r'^http', word) and word is not "" and word != "":
-					word_list.append(re.sub('[^a-zA-Z]+', '', word))
+				if not re.match(r'^#', word) and not re.match(r'^@', word) and not re.match(r'^https', word) and not re.match(r'^http', word) and word is not "" and word is not ' ':
+					if word is not '' and word is not ' ':
+						word_list.append(re.sub('[^a-zA-Z]+', '', word))
 
 def run_for_your_life(hashtag_list):
 	word_list = []
+	num_tweets = len(hashtag_list)
+
+
 	for tweet_text in hashtag_list:
 		scrape_tweet(tweet_text, word_list)
 

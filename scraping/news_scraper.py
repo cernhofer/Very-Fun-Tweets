@@ -24,7 +24,7 @@ def get_query(input_query):
 	else:
 		return_query = input_query[0]
 
-	print("query is", query)
+	print("query is", return_query)
 	return return_query
 
 def make_soup(url, **params):
