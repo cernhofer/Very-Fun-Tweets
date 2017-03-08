@@ -1,9 +1,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
 
 <div class="container">
-  <h1>RESULTS for #{{ search_term }}</h1>
-
-
+  <h1>RESULTS#{{ search_term }}</h1>
 
   <p>You searched for {{ search_term }}</p>
 
@@ -48,19 +46,6 @@ $(function () {
         }
       },
     },
-    plotOptions: {
-      series: {
-        cursor:'pointer',
-        point:{
-          events:{
-            click:function() {
-                            var href = {{ story.url }};
-              window.open(href);
-            }
-          }
-        }
-      }
-    },
     series: [{
       tooltip: {
         pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y}</b><br/>'
@@ -75,7 +60,7 @@ $(function () {
 });
 </script>
 
+
 <div style="margin-left: auto; margin-right:auto; width:700px;">
   <h4> <a href="./tweet_search"> TRY ANOTHER SEARCH </a> </h4>
 </div>
-
