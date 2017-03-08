@@ -29,35 +29,13 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'wa
 tweets_data_path = 'test_data.txt'
 
 def scrape_tweet(word_string, word_list):
-	#nouns = {x.name().split('.', 1)[0] for x in wn.all_synsets('n')}
 	for word in re.split('\\s+', word_string):
 		if word != " " and word != "":
 			word = word.lower()
 			word = ''.join(x for x in word if x in string.printable)
 			if word not in INDEX_IGNORE:
 				if not re.match(r'^#', word) and not re.match(r'^@', word) and not re.match(r'^https', word) and not re.match(r'^http', word) and word is not "":
-					#if word in nouns:
-						#add to the list
 					word_list.append(re.sub('[^a-zA-Z]+', '', word))
-					#else:
-						#print(word, "is not a noun")
-						#if word[-1] == "s":
-							#if word[:-1] in nouns:
-								#print("EXCEPT MAYBE IT IS!!!!! :O\n\n\n")
-								#word_list.append(re.sub('[^a-zA-Z]+', '', word))
-						#word_list.append(re.sub('[^a-zA-Z]+', '', word))
-					#else:
-						#if word[-1] == "s":
-							#if word[:-1] in nouns:
-								#word_list.append(re.sub('[^a-zA-Z]+', '', word))
-
-						#word_list.append(word)
-
-
-def printpretty(listt):
-	for thing in listt:
-		print(thing)
-
 
 def run_for_your_life(hashtag_list):
 	word_list = []
@@ -67,8 +45,11 @@ def run_for_your_life(hashtag_list):
 	c = Counter(word_list).most_common(3)
 	test = list(c)
 
+	print(test)
+
 	to_return = []
 	for thing in test:
 		to_return.append(thing[0])
 
+	print(to_return)
 	return to_return
