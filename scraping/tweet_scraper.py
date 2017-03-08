@@ -1,6 +1,5 @@
 import re
-import bs4
-import queue
+#import bs4
 import json
 import sys
 import csv
@@ -8,8 +7,6 @@ import pdb
 import collections
 import string
 from collections import Counter
-from nltk.corpus import wordnet as wn
-import pandas as pd
 
 THRESH = 0.4
 
@@ -41,32 +38,46 @@ def scrape_tweet(word_string, word_list):
 							word_list.append(word)
 
 def run_for_your_life(hashtag_list):
-	word_list = []
+	all_words = []
 	num_tweets = len(hashtag_list)
 
 	print("there are", num_tweets, "number of tweets in this hashtag!")
 
 
 	for tweet_text in hashtag_list:
-		scrape_tweet(tweet_text, word_list)
+		scrape_tweet(tweet_text, all_words)
 
-	c = Counter(word_list).most_common(3)
-	test = list(c)
+	c = Counter(all_words).most_common(3)
 
-	print(test)
+	word_list = list(c)
+
+	print(word_list)
 
 	common_words = []
 	count = 0
-	for word in common_words:
+	for word in word_list:
 		count += word[1]
 		common_words.append(word[0])
 
-	if count/num_tweets > THRESH:
+	if count/float(num_tweets) > THRESH:
 		print(common_words)
 		return common_words
 
 	else:
 		return None
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
