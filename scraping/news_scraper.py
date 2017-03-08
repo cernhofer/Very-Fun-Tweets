@@ -64,6 +64,7 @@ def scrape_it_good(*args):
 	news_links = get_news_url(divs)
 
 	if len(news_links) < 3:
+		print("NOT ENOUGH NEWS ARTICLES")
 		return None, None
 
 	twitter_matrix = get_tf_idf([TWITTER_WORDS, get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1])])
@@ -103,5 +104,5 @@ def run_baby_run(hashtag, dt, common_words):
 		story_dict = {'timestamp': date, 'url': url, 'headline': title}
 		to_return.append(story_dict)
 
-	print(to_return)
+	print("\n\nNEWS ARTICLE:", to_return)
 	return to_return

@@ -21,7 +21,7 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'wa
                     'on',  'or',  's',  'so', 'it', 'there', 'but', 'by', 'I', 'me',
                     'such',  'that',  'the',  'their',  'this',  'through',  'to',
                     'we', 'were', 'which', 'will', 'with', 'yet', 'rt', 'mr', 'he', 'your', 
-                    'this', 'its', 'about'])
+                    'this', 'its', 'about', 'his', 'her'])
 
 #test is a list of tweet bodies
 
