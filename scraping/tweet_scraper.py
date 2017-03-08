@@ -24,6 +24,8 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'wa
 
 #scrape out
 
+test = ['test', 'test', 'this is a test', 'i am testing this test like a test', 'cool days ahead', 'love days when i test', 'cool cool', 'marsh marsh']
+
 tweets_data_path = 'test_data.txt'
 
 def scrape_tweet(word_string, word_list, hashtag):
@@ -34,7 +36,7 @@ def scrape_tweet(word_string, word_list, hashtag):
 			word = re.sub('[^a-zA-Z]+', '', word)
 			if word not in INDEX_IGNORE:
 				if not re.match(r'^#', word) and not re.match(r'^@', word) and not re.match(r'^https', word) and not re.match(r'^http', word) and word is not "" and word is not ' ':
-						if word is not hashtag:
+						if word != hashtag:
 							word_list.append(word)
 
 def run_for_your_life(hashtag_list, hashtag):
@@ -68,6 +70,8 @@ def run_for_your_life(hashtag_list, hashtag):
 
 
 
+if __name__ == "__main__":
+	run_for_your_life(test, 'test')
 
 
 
