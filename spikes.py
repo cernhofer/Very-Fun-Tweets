@@ -76,4 +76,6 @@ def spikes(sample_hashtag,tolerance=0.2,spikes=1):
         filtered_df = df.loc[df['datestring'] == spike_date[0]]
         tweet_text_list = filtered_df['tweet_text'].tolist()
 
-    return has_spike, spike_date, output, tweet_text_list
+        return has_spike, spike_date, output, tweet_text_list
+
+    return has_spike, spike_date, output, None

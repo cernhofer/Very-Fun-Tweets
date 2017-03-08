@@ -93,7 +93,7 @@ def run_baby_run(hashtag, dt, common_words):
 		search_words = [hashtag] + common_words
 		args_to_pass = (search_words, month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
-		story_dict = {'timstamp': date, 'url': url, 'healine': title}
+		story_dict = {'timestamp': date, 'url': url, 'headline': title}
 		to_return.append(story_dict)
 
 	print(to_return)
