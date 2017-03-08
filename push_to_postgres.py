@@ -18,6 +18,8 @@ def push_to_postgres(data):
     payload=json.dumps(data)
     )
 
+    print('\n\n', payload, '\n\n')
+
     response = client.post(REQUEST_URL, data=payload)
 
 
