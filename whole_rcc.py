@@ -13,8 +13,13 @@ DATABASE_NAME = os.environ.get("DATABASE_NAME")
 client = MongoClient(MONGODB_URI)
 db = client[DATABASE_NAME]
 
+hashtag_count = 0
+
 hashtags = db.tweets.find({})
 for hashtag in hashtags:
+    hashtag_count += 1
+    print("\n\n\nThis is hashtag number", hashtag_count)
+
     if len(hashtag['tweets']) < 1000: continue
 
     print("Here is Sush!")
@@ -24,17 +29,16 @@ for hashtag in hashtags:
         print("SPIKE!")
         hashtag_name = spike_data['hashtag']
         print(hashtag_name)
-        # pass to tweet scraping
-        common_words = run_for_your_life(tweet_text_list)
-        # fix later when have more than one spike
-        #common_words = []
-        # pass to news scraping
-        print('Calling run_baby_run')
 
-        news_story = run_baby_run(hashtag_name, date_list, common_words)
+        common_words = run_for_your_life(tweet_text_list, hashtag_name)
+        if common_words is not None:
+            print('Calling run_baby_run')
+            news_story = run_baby_run(hashtag_name, date_list, common_words)
 
-        if news_story is not None:
-            spike_data['stories'] = news_story
+            if news_story is not None:
+                spike_data['stories'] = news_story
 
-            print('Pushing to postgres')
-            push_to_postgres(spike_data)
+                print('Pushing to postgres')
+                push_to_postgres(spike_data)
+        else:
+            print("hashtag isn't news worthy :/")

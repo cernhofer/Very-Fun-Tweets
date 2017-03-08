@@ -45,7 +45,7 @@ def populate(request):
 	hashtag.save()
 
 	for tweetbucket in payload.get('tweetbuckets'):
-		timestamp = tweetbucket.get('timestamp')
+		timestamp = tweetbucket.get('datestring')
 		count = tweetbucket.get('count')
 		tb = TweetBucket(timestamp=timestamp, count=count, hashtag=hashtag)
 		tb.save()
@@ -53,7 +53,8 @@ def populate(request):
 	for story in payload.get('stories'):
 		timestamp = story.get('timestamp')
 		url = story.get('url')
-		s = Story(timestamp=timestamp, url=url, hashtag=hashtag)
+		headline = story.get('headline')
+		s = Story(timestamp=timestamp, url=url, hashtag=hashtag, headline=headline)
 		s.save()
 
 	return HttpResponse('ok')

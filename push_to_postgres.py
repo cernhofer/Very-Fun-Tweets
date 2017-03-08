@@ -18,34 +18,36 @@ def push_to_postgres(data):
     payload=json.dumps(data)
     )
 
+    print('\n\n', payload, '\n\n')
+
     response = client.post(REQUEST_URL, data=payload)
 
 
 ##### FOR TESTING
-import datetime as dt
-data = {
-    'hashtag': 'goat',
-    'tweetbuckets': [
-        {
-            'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=1)).isoformat(),
-            'count': 10,
-        },
-        {
-            'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=2)).isoformat(),
-            'count': 20,
-        },
-        {
-            'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=3)).isoformat(),
-            'count': 5,
-        }
-    ],
-    'stories': [
-        {
-            'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=2)).isoformat(),
-            'url': 'https://google.com',
-            'headline': 'Heroic cat is the best.',
-        }
-    ],
-}
-
-push_to_postgres(data)
+# import datetime as dt
+# data = {
+#     'hashtag': 'goat',
+#     'tweetbuckets': [
+#         {
+#             'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=1)).isoformat(),
+#             'count': 10,
+#         },
+#         {
+#             'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=2)).isoformat(),
+#             'count': 20,
+#         },
+#         {
+#             'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=3)).isoformat(),
+#             'count': 5,
+#         }
+#     ],
+#     'stories': [
+#         {
+#             'timestamp': (dt.datetime.today() - dt.timedelta(days=3, hours=2)).isoformat(),
+#             'url': 'https://google.com',
+#             'headline': 'Heroic cat is the best.',
+#         }
+#     ],
+# }
+#
+# push_to_postgres(data)

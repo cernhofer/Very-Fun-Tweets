@@ -1,24 +1,66 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
 
-<div class = "jumotron">
-<h2>HERE ARE WHERE THE RESULTS OF THE SEARCH ARE GOING TO LIVE</h2>
+<div class="container">
+  <h1>RESULTS#{{ search_term }}</h1>
+
+  <p>You searched for {{ search_term }}</p>
+
+  <div id="chart"></div>
+
+  <h2>Tweet buckets</h2>
+  <ul>
+    {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
+      <li>
+      <li>{{ tweet_bucket.timestamp }} - {{ tweet_bucket.count }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Stories</h2>
+  <ul>
+    {% for story in hashtag_data.story_set.all %}
+      <li>{{ story.timestamp }} - {{ story.url }} {{ story.headline }}</li>
+    {% endfor %}
+  </ul>
 </div>
 
-<p>You searched for {{ search_term }}</p>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 
-<h1>Results for {{ hashtag_data.name }}</h1>
+<script>
+$(function () {
+  var myChart = Highcharts.chart('chart', {
+    chart: {
+      type: 'spline'
+    },
+    title: {
+      text: '#{{ hashtag_data.name }} over time'
+    },
+    legend: {
+      enabled: false,
+    },
+    xAxis: {
+      type: 'datetime',
+      labels: {
+        formatter: function() {
+            return Highcharts.dateFormat('%d %b %Y', this.value)
+        }
+      },
+    },
+    series: [{
+      tooltip: {
+        pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{{ story.headline}}</b><br/>'
+      },
+      data: [
+        {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
+        [Date.parse('{{ tweet_bucket.formatted_timestamp }}'), {{ tweet_bucket.count }}],
+        {% endfor %}
+      ]
+    }]
+  });
+});
+</script>
 
-<h2>Tweet buckets</h2>
-<ul>
-  {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
-    <li>
-    <li>{{ tweet_bucket.timestamp }} - {{ tweet_bucket.count }}</li>
-  {% endfor %}
-</ul>
 
-<h2>Stories</h2>
-<ul>
-  {% for story in hashtag_data.story_set.all %}
-    <li>{{ story.timestamp }} - {{ story.url }} {{ story.headline }}</li>
-  {% endfor %}
-</ul>
+<div style="margin-left: auto; margin-right:auto; width:700px;">
+  <h4> <a href="./"> TRY ANOTHER SEARCH </a> </h4>
+</div>
