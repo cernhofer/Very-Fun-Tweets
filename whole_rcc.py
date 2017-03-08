@@ -17,7 +17,7 @@ hashtags = db.tweets.find({})
 for hashtag in hashtags:
     if len(hashtag['tweets']) < 1000: continue
 
-    print("Here is Sush!")
+    print("\n\n\nHere is Sush!")
     has_spike, date_list, spike_data, tweet_text_list = spikes(hashtag)
 
     if has_spike:
@@ -25,6 +25,7 @@ for hashtag in hashtags:
         hashtag_name = spike_data['hashtag']
         print(hashtag_name)
         # pass to tweet scraping
+        print("hashtag has", len(tweet_text_list), "tweets")
         common_words = run_for_your_life(tweet_text_list)
         # fix later when have more than one spike
         #common_words = []
