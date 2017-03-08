@@ -48,7 +48,7 @@ $(function () {
     },
     series: [{
       tooltip: {
-        pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y}</b><br/>'
+        pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{{ story.headline}}</b><br/>'
       },
       data: [
         {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
