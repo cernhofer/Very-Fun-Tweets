@@ -6,6 +6,7 @@ import re
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
+import time
 
 
 URL = 'https://www.google.com/search?cf=all&hl=en&pz=1&ned=en_ph&tbm=nws&gl=ph&as_q={query}&as_occt=any&as_drrb=b&as_mindate={month}%2F{start_date}%2F{year}&as_maxdate={month}%2F{end_date}%2F{year}&tbs=cdr%3A1%2Ccd_min%3A{month}%2F{start_date}%2F{year}%2Ccd_max%3A{month}%2F{end_date}%2F{year}&authuser=0'
@@ -28,8 +29,14 @@ def get_query(input_query):
 	return return_query
 
 def make_soup(url, **params):
-	response = requests.get(url.format(**params), headers = HEADERS, verify=False)
-	print(response.status_code)
+	status_code = 503
+	while status_code == 503:
+		response = requests.get(url.format(**params), headers = HEADERS, verify=False)
+		status_code = response.status_code
+
+		if status_code == 503:
+			time.sleep(1200)
+
 	return bs4.BeautifulSoup(response.text, "html5lib")
 
 def get_news_url(div):
