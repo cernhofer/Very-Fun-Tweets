@@ -46,7 +46,9 @@ def populate(request):
 
 	for tweetbucket in payload.get('tweetbuckets'):
 		timestamp = tweetbucket.get('datestring')
+		print('\n\n\tTIMESTAMP', timestamp)
 		count = tweetbucket.get('count')
+		print('\tCOUNT', count)
 		tb = TweetBucket(timestamp=timestamp, count=count, hashtag=hashtag)
 		tb.save()
 
