@@ -87,6 +87,7 @@ def get_date(dt_obj):
 def run_baby_run(hashtag, dt, common_words):
 	#to_return = list of dictionaries!!!!!!!!!
 	to_return = []
+	print(dt)
 
 	for i, date in enumerate(dt):
 		year, month, start, end = get_date(date)  #don't know if this will work!!!
