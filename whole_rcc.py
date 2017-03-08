@@ -27,15 +27,13 @@ for hashtag in hashtags:
         # pass to tweet scraping
         print("hashtag has", len(tweet_text_list), "tweets")
         common_words = run_for_your_life(tweet_text_list)
-        # fix later when have more than one spike
-        #common_words = []
-        # pass to news scraping
-        print('Calling run_baby_run')
+        if common_words is not None:
+            print('Calling run_baby_run')
+            news_story = run_baby_run(hashtag_name, date_list, common_words)
+            if news_story is not None:
+                spike_data['stories'] = news_story
 
-        news_story = run_baby_run(hashtag_name, date_list, common_words)
-
-        if news_story is not None:
-            spike_data['stories'] = news_story
-
-            print('Pushing to postgres')
-            push_to_postgres(spike_data)
+                print('Pushing to postgres')
+                push_to_postgres(spike_data)
+        else:
+            print("hashtag isn't news worthy :/")

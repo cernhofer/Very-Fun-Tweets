@@ -11,6 +11,8 @@ from collections import Counter
 from nltk.corpus import wordnet as wn
 import pandas as pd
 
+THRESH = 0.4
+
 INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'was',
                     'but',  'by',  'course',  'for',  'from',  'how', 'i', 'you',
                     'ii',  'iii',  'in',  'include',  'is',  'not',  'of', 'not', 'no',
@@ -53,9 +55,21 @@ def run_for_your_life(hashtag_list):
 
 	print(test)
 
-	to_return = []
-	for thing in test:
-		to_return.append(thing[0])
+	common_words = []
+	count = 0
+	for word in common_words:
+		count += word[1]
+		common_words.append(word[0])
 
-	print(to_return)
-	return to_return
+	if count/num_tweets > THRESH:
+		print(common_words)
+		return common_words
+
+	else:
+		return none
+
+
+
+
+
+
