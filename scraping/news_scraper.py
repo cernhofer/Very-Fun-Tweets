@@ -65,6 +65,8 @@ def scrape_it_good(*args):
 	divs += soup.find_all("div", class_ = "_hnc card-section")
 	news_links = get_news_url(divs)
 
+
+	print(len(news_links))
 	if len(news_links) < 3:
 		print("NOT ENOUGH NEWS ARTICLES")
 		return None, None
@@ -108,3 +110,11 @@ def run_baby_run(hashtag, dt, common_words):
 
 	print("\n\nNEWS ARTICLE:", to_return)
 	return to_return
+
+
+
+
+
+if __name__ == "__main__":
+	args_to_pass = (['supergirl, episode, musical, alex'], 3, 6, 7, 2017)
+	title, url = scrape_it_good(*args_to_pass)
