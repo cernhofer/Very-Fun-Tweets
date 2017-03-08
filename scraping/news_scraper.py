@@ -62,7 +62,10 @@ def scrape_it_good(*args):
 	divs += soup.find_all("div", class_ = "_hnc card-section")
 	news_links = get_news_url(divs)
 
-	twitter_matrix = get_tf_idf([TWITTER_WORDS, get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]), get_article_text(news_links[3][1]), get_article_text(news_links[4][1])])
+	if len(news_links) < 3:
+		return None, None
+
+	twitter_matrix = get_tf_idf([TWITTER_WORDS, get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1])])
 
 	twitter_val = cosine_similarity(twitter_matrix[0:1], twitter_matrix)
 
@@ -93,6 +96,8 @@ def run_baby_run(hashtag, dt, common_words):
 		search_words = [hashtag] + common_words
 		args_to_pass = (search_words, month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
+		if title is None:
+			return None
 		story_dict = {'timestamp': date, 'url': url, 'headline': title}
 		to_return.append(story_dict)
 

@@ -30,7 +30,11 @@ for hashtag in hashtags:
         common_words = []
         # pass to news scraping
         print('Calling run_baby_run')
-        spike_data['stories'] = run_baby_run(hashtag_name, date_list, common_words)
 
-        print('Pushing to postgres')
-        push_to_postgres(spike_data)
+        news_story = run_baby_run(hashtag_name, date_list, common_words)
+
+        if news_story is not None:
+            spike_data['stories'] = news_story
+
+            print('Pushing to postgres')
+            push_to_postgres(spike_data)
