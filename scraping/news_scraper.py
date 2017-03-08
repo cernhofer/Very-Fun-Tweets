@@ -55,6 +55,13 @@ def get_news_url(div):
 
 	return urls
 
+def get_string_from_list(list_tostring):
+	final_string = ''
+	for element in list_tostring:
+		final_string += element + ' '
+
+	return final_string
+
 def get_article_text(link):
 	link_text = ''
 	link_soup = make_soup(link)
@@ -76,8 +83,9 @@ def check_tf_idf(doc1, doc2, doc3, terms= TWITTER_WORDS):
 
 def scrape_it_good(*args):
 	ban_twitter = True
-	in_query, month, start_date, end_date, year = args
-	query = get_query(in_query)
+	hashtag, common_words, month, start_date, end_date, year = args
+	search_words = [hashtag] + common_words
+	query = get_query(search_words, ban_twitter)
 	soup = make_soup(URL, query=query, month=month, start_date=start_date, end_date=end_date, year=year)
 	divs = soup.find_all("div", class_ = "_cnc")
 	divs += soup.find_all("div", class_ = "_hnc card-section")
@@ -91,12 +99,12 @@ def scrape_it_good(*args):
 
 	final_list = []
 
-	key_words_val = check_tf_idf(get_article_text(news_links[0][1]),get_article_text(news_links[1][1]),get_article_text(news_links[2][1]), common_words)
+	key_words_val = check_tf_idf(get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]), get_string_from_list(common_words))
 	
 	if ban_twitter:
-		twitter_val = check_tf_idf(get_article_text(news_links[0][1]),get_article_text(news_links[1][1]),get_article_text(news_links[2][1]))
-
-	for i in range(len(key_word_val[0])):
+		twitter_val = check_tf_idf(get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]))
+ 
+	for i in range(len(key_words_val[0])):
 		if i != 0:
 			if ban_twitter:
 				if twitter_val[0][i] < 0.025:
@@ -105,7 +113,7 @@ def scrape_it_good(*args):
 			else:
 				final_list.append(news_links[i-1] + [key_words_val[0][i]])
 
-	final_list.sort(key=lambda X: x[2], reverse= True)
+	final_list.sort(key=lambda x: x[2], reverse= True)
 
 	return final_list[0][0], final_list[0][1]
 
@@ -119,14 +127,12 @@ def get_date(dt_obj):
 	return year, month, s_date, e_date
 
 def run_baby_run(hashtag, dt, common_words):
-	#to_return = list of dictionaries!!!!!!!!!
 	to_return = []
 
 	for i, date in enumerate(dt):
 		year, month, start, end = get_date(date)  #don't know if this will work!!!
-		search_words = [hashtag] + common_words
-		print("search words", search_words)
-		args_to_pass = (search_words, month, start, end, year)
+		#search_words = [hashtag] + common_words
+		args_to_pass = (hashtag, common_words, month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
 		if title is None:
 			return None
@@ -138,6 +144,7 @@ def run_baby_run(hashtag, dt, common_words):
 
 
 
-
+if __name__ == "__main__":
+	run_baby_run('supergirl', ['2017-03-06'], ['alex', 'musical', 'episode'])
 
 
