@@ -40,6 +40,8 @@ def get_news_url(div):
 
 			urls.append((title, cleaned))
 
+			print(title, cleaned)
+
 	return urls
 
 def get_article_text(link):
