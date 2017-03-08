@@ -66,7 +66,7 @@ def run_for_your_life(hashtag_list):
 		return common_words
 
 	else:
-		return none
+		return None
 
 
 
