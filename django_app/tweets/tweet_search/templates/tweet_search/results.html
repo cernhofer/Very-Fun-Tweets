@@ -1,7 +1,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
 
 <div class="container">
-  <h2>RESULTS FOR #{{ hashtag_data.name }}</h2>
+  <h1>RESULTS#{{ search_term }}</h1>
+
+
 
   <p>You searched for {{ search_term }}</p>
 
@@ -50,6 +52,19 @@ $(function () {
       tooltip: {
         pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y}</b><br/>'
       },
+      plotOptions: {
+      series: {
+        cursor:'pointer',
+        point:{
+          events:{
+            click:function() {
+                            var href = {{ story.url }};
+              window.open(href);
+            }
+          }
+        }
+      }
+    },
       data: [
         {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
         [Date.parse('{{ tweet_bucket.formatted_timestamp }}'), {{ tweet_bucket.count }}],
@@ -59,3 +74,6 @@ $(function () {
   });
 });
 </script>
+
+<h4> <a href="./tweet_search"> TRY ANOTHER SEARCH </a> </h4>
+
