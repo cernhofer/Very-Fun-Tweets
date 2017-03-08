@@ -24,6 +24,7 @@ def get_query(input_query):
 	else:
 		return_query = input_query[0]
 
+	print("query is", query)
 	return return_query
 
 def make_soup(url, **params):
@@ -94,6 +95,7 @@ def run_baby_run(hashtag, dt, common_words):
 	for i, date in enumerate(dt):
 		year, month, start, end = get_date(date)  #don't know if this will work!!!
 		search_words = [hashtag] + common_words
+		print("search words", search_words)
 		args_to_pass = (search_words, month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
 		if title is None:
