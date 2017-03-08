@@ -34,6 +34,7 @@ def make_soup(url, **params):
 		status_code = response.status_code
 
 		if status_code == 503:
+			print("Sleeping beauty time.")
 			time.sleep(1200)
 
 	return bs4.BeautifulSoup(response.text, "html5lib")
