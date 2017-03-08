@@ -73,7 +73,7 @@ def spikes(sample_hashtag,tolerance=0.2,spikes=1):
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
         spike_date = [counts_df.iloc[spike_index]['datestring']]
-        filtered_df = df.loc[df['datestring'] == spike_date]
+        filtered_df = df.loc[df['datestring'] == spike_date[0]]
         tweet_text_list = filtered_df['tweet_text'].tolist()
 
     return has_spike, spike_date, output, tweet_text_list
