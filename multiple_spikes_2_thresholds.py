@@ -5468,7 +5468,7 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
     counts_df.columns = ['count','datestring']
     print(counts_df)
     #counts_df.c
-    '''
+
 
     # sort the dataframe by date
     counts_df = counts_df.sort_values(by='datestring')
@@ -5482,7 +5482,7 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
     counts_df['moving_average'] = counts_df.apply (lambda row: moving_average(row), axis=1 )
     counts_df['change'] = counts_df.apply (lambda row: change_avg(row), axis=1 )
     counts_df = counts_df.sort_values(by='change',ascending=False)
-
+    '''
     print(counts_df)
     has_spikes = []
     output={}
