@@ -126,7 +126,8 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
         tweetbuckets = get_tweetbuckets(counts_df)
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
-
+        print("spike dates   ",spike_dates)
+        print("has_spikes", has_spikes)
         return True, spike_dates, output, list_of_list_of_tweets
 
     return False, None, None, None
