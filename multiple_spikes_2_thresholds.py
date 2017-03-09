@@ -5510,6 +5510,8 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
     #print(spike_dates)
 
     if len(has_spikes)>0:
+        counts_df = insert_missing_data('2017-02-21','2017-02-23',counts_df)
+        counts_df = insert_missing_data('2017-02-25','2017-02-27',counts_df)
         tweetbuckets = get_tweetbuckets(counts_df)
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
@@ -5524,7 +5526,7 @@ def insert_missing_data(start_date, end_date, counts_df):
     indexed_df = counts_df.set_index(['datestring'])
     start_value = indexed_df['count'][start_date]
     end_value = indexed_df['count'][end_date]
-    num_days = int(end_date[-2:]) - int(start_date[-2:]) -1
+    num_days = int(end_date[-2:]) - int(start_date[-2:])
 
     missing_dict = {}
     for i in range(num_days):
@@ -5532,6 +5534,8 @@ def insert_missing_data(start_date, end_date, counts_df):
         value = start_value + (end_value-start_value)/num_days
         start_value = value
         missing_dict[key]=value
+        counts_df.ix[counts_df['datestring'] == key]
+
     missing = pd.Series(missing_dict, name='count')
     missing.index.name = 'datestring'
     df = missing.to_frame()
