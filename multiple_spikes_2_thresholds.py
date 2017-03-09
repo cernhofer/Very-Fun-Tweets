@@ -5534,7 +5534,7 @@ def insert_missing_data(start_date, end_date, counts_df):
         value = start_value + (end_value-start_value)/num_days
         start_value = value
         missing_dict[key]=value
-        counts_df = [counts_df['datestring'] != str(key)]
+        counts_df = counts_df[counts_df['datestring'] != str(key)]
 
     missing = pd.Series(missing_dict, name='count')
     missing.index.name = 'datestring'
