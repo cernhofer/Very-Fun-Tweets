@@ -73,7 +73,7 @@ def get_tweetbuckets(counts_df):
         tweetbuckets.append(dictionary)
     return tweetbuckets
 
-def spikes(sample_hashtag,threshold=0.2,spikes=1):
+def spikes(sample_hashtag,threshold=0.2,spikes=3):
     df = pd.DataFrame.from_dict(sample_hashtag['tweets'])
 
     hashtag = sample_hashtag['hashtag']
@@ -96,30 +96,41 @@ def spikes(sample_hashtag,threshold=0.2,spikes=1):
     counts_df['change'] = counts_df.apply (lambda row: change(row), axis=1 )
     counts_df = counts_df.sort_values(by='change',ascending=False)
 
-    #print(counts_df)
+    print(counts_df)
     has_spikes = []
     output={}
     spike_dates = []
+    list_of_list_of_tweets = []
     for i in range(spikes):
+
         change1 = counts_df.iloc[i]['change']
-        #print(change1)
-        if change1 >= threshold:
+        print(change1)
+        if abs(change1) >= threshold:
+            # see if this one is a spike
+
+            # update spike boolean
             has_spike = True
+            # get spike date
             spike_date = [counts_df.iloc[i]['datestring']]
+            # get list of tweets for this spike
+            filtered_df = df.loc[df['datestring'] == spike_date[0]]
+            tweet_text_list = filtered_df['tweet_text'].tolist()
+            # append all results
             spike_dates.append(spike_date)
             has_spikes.append(has_spike)
+            list_of_list_of_tweets.append(tweet_text_list)
+
     #print(has_spikes)
     #print(spike_dates)
     if len(has_spikes)>0:
         tweetbuckets = get_tweetbuckets(counts_df)
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
-        filtered_df = df.loc[df['datestring'] == spike_date[0]]
-        tweet_text_list = filtered_df['tweet_text'].tolist()
 
-        return True, spike_dates[0], output, tweet_text_list
+        return True, spike_dates, output, list_of_list_of_tweets
 
     return False, None, None, None
+
 
 def insert_missing_data(start_date, end_date, counts_df):
     # index by date
