@@ -5524,8 +5524,8 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
 def insert_missing_data(start_date, end_date, counts_df):
     # index by date
     indexed_df = counts_df.set_index(['datestring'])
-    start_value = indexed_df['count'][start_date]
-    end_value = indexed_df['count'][end_date]
+    start_value = int(indexed_df['count'][start_date])
+    end_value = int(indexed_df['count'][end_date])
     num_days = int(end_date[-2:]) - int(start_date[-2:])
 
     missing_dict = {}
@@ -5534,7 +5534,7 @@ def insert_missing_data(start_date, end_date, counts_df):
         value = start_value + (end_value-start_value)/num_days
         start_value = value
         missing_dict[key]=value
-        counts_df = [counts_df['datestring'] != key]
+        counts_df = counts_df[counts_df['datestring'] != str(key)]
 
     missing = pd.Series(missing_dict, name='count')
     missing.index.name = 'datestring'
