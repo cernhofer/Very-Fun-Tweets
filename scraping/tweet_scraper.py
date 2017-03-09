@@ -47,6 +47,7 @@ def run_for_your_life(hashtag_list, hashtag):
 	for indiv_list in hashtag_list:
 
 		all_words = []
+		print(len(indiv_list))
 		num_tweets = len(indiv_list)
 
 		for tweet_text in indiv_list:

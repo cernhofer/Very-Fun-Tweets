@@ -130,8 +130,9 @@ def run_baby_run(hashtag, dt, common_words):
 	to_return = []
 
 	for i, date in enumerate(dt):
+		if common_words[i] == None:
+			continue
 		year, month, start, end = get_date(date)  #don't know if this will work!!!
-		#search_words = [hashtag] + common_words
 		args_to_pass = (hashtag, common_words[i], month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
 		if title is None:
