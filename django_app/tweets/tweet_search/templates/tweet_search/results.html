@@ -9,8 +9,6 @@
   <div class="container">
     <h1>RESULTS #{{ search_term }}</h1>
 
-    <p>You searched for {{ search_term }}</p>
-
     <div id="chart"></div>
     <div style="margin-left: auto; margin-right:auto; width:1000px;">
       <h6>*Results taken from random sample of 1% Twitter data </h6>
@@ -53,11 +51,11 @@ $(function () {
                         enabled: true
                     }
                 }
-        },    
+        },
       cursor: 'pointer',
         point: {
             events: {
-                click: function() { 
+                click: function() {
                   {% if this.option.label != "" %}
                     window.open(this.options.q)
                   {% endif %}
@@ -78,8 +76,12 @@ $(function () {
           label: "",
           {% for story in hashtag_data.story_set.all%}
             {% if tweet_bucket.formatted_timestamp == story.formatted_timestamp %}
-              q: '{{ story.url }}', 
-              label: '{{ story.clean_headline }}',
+              q: '{{ story.url }}',
+              label: '{{ story.headline }}',
+              marker: {symbol: 'url(http://emojipedia-us.s3.amazonaws.com/cache/29/1e/291e8fa842dc88d96a03fc553bfc4000.png)',
+              width: 40,
+              height: 40,
+            }
             {% endif %}
           {% endfor %}
         },
@@ -92,6 +94,6 @@ $(function () {
 </script>
 
 
-<div style="margin-left: auto; margin-right:auto; width:1000px;">
+<div class="container">
   <h3> <a href="./"> TRY ANOTHER SEARCH </a> </h3>
 </div>
