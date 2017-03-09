@@ -5510,8 +5510,8 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
     #print(spike_dates)
 
     if len(has_spikes)>0:
-        #counts_df = insert_missing_data('2017-02-21','2017-02-24',counts_df)
-        #counts_df = insert_missing_data('2017-02-24','2017-02-27',counts_df)
+        counts_df = insert_missing_data('2017-02-21','2017-02-24',counts_df)
+        counts_df = insert_missing_data('2017-02-24','2017-02-27',counts_df)
         tweetbuckets = get_tweetbuckets(counts_df)
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
