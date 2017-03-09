@@ -1,7 +1,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
 
 <div class="container">
-  <h1>RESULTS#{{ search_term }}</h1>
+  <h1>RESULTS #{{ search_term }}</h1>
 
   <p>You searched for {{ search_term }}</p>
 
@@ -18,7 +18,8 @@
   <h2>Stories</h2>
   <ul>
     {% for story in hashtag_data.story_set.all %}
-      <li>{{ story.timestamp }} - {{ story.url }} {{ story.headline }}</li>
+      <li>{{ story.timestamp }} - <a href="{{ story.url }}"> {{ story.url }}</a> -- {{ story.headline }}</li>
+      var link = <a href="{{ story.url }}"> {{ story.url }}</a>
     {% endfor %}
   </ul>
 </div>
@@ -27,6 +28,8 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 
 <script>
+
+
 $(function () {
   var myChart = Highcharts.chart('chart', {
     chart: {
@@ -46,13 +49,40 @@ $(function () {
         }
       },
     },
+    plotOptions: {
+    series: {
+           marker: {
+                enabled: true,
+                symbol: 'circle',
+                radius: 1,
+                states: {
+                    hover: {
+                        enabled: true
+                    }
+                }
+        },    
+      cursor: 'pointer',
+        point: {
+            events: {
+                click: function() {
+                  window.open(this.options.q, '_blank')
+        }
+              }
+            }
+        }
+    
+    },
     series: [{
       tooltip: {
-        pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{{ story.headline}}</b><br/>'
+        pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y}</b><br/><b>{{story.headline}}</b><br/>'
       },
       data: [
         {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
-        [Date.parse('{{ tweet_bucket.formatted_timestamp }}'), {{ tweet_bucket.count }}],
+        {
+          x: Date.parse('{{ tweet_bucket.formatted_timestamp }}'),
+          y: {{ tweet_bucket.count }},
+          q: 'https://google.com'
+        },
         {% endfor %}
       ]
     }]
