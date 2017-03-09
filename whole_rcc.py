@@ -2,7 +2,7 @@ from push_to_postgres import push_to_postgres
 from scraping.news_scraper import run_baby_run
 from scraping.tweet_scraper import run_for_your_life
 # from spikes import spikes
-from multiple_spikes import spikes
+from multiple_spikes_2_thresholds import spikes
 from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
 import os, json
@@ -17,7 +17,7 @@ db = client[DATABASE_NAME]
 hashtag_count = 0
 
 # as number increases use: .skip(int)
-hashtags = db.tweets.find({}).skip(208)
+hashtags = db.tweets.find({})
 for hashtag in hashtags:
     hashtag_count += 1
     print("\n\n\nThis is hashtag number", hashtag_count)
