@@ -131,6 +131,7 @@ def run_baby_run(hashtag, dt, common_words):
 
 	for i, date in enumerate(dt):
 		if common_words[i] == None:
+			print("common words was empty")
 			continue
 		year, month, start, end = get_date(date)  #don't know if this will work!!!
 		args_to_pass = (hashtag, common_words[i], month, start, end, year)
@@ -141,6 +142,7 @@ def run_baby_run(hashtag, dt, common_words):
 		to_return.append(story_dict)
 
 	if to_return == []:
+		print("No news worthy data from any of the days!!!")
 		return None
 	else:
 		print("\n\nNEWS ARTICLE:", to_return)
