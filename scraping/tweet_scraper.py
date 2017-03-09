@@ -43,6 +43,7 @@ def scrape_tweet(word_string, word_list, hashtag):
 
 def run_for_your_life(hashtag_list, hashtag):
 	#hashtah list = LIST OF LISTS 
+	return_words = False
 	common_words_list = []
 	for i, indiv_list in enumerate(hashtag_list):
 
@@ -64,15 +65,16 @@ def run_for_your_life(hashtag_list, hashtag):
 			common_words.append(word[0])
 
 		if count/float(num_tweets) > THRESH:
-			common_words_list.append(common_words)
+			return_words = True
 
-		else:
-			print(hashtag, "didn't meet threshold at index", i)
-			common_words_list.append(None)
+		common_words_list.append(common_words)
 
 
 	print("common_words list to be returned:", common_words_list)
-	return common_words_list
+	if return_words:
+		return common_words_list
+	else:
+		return None
 
 if __name__ == "__main__":
 	thing = run_for_your_life([test, test2], 'test')
