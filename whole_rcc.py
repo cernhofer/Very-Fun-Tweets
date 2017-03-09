@@ -16,7 +16,7 @@ db = client[DATABASE_NAME]
 
 hashtag_count = 0
 
-hashtags = db.tweets.find({})
+hashtags = db.tweets.find({}).skip(16)
 for hashtag in hashtags:
     hashtag_count += 1
     print("\n\n\nThis is hashtag number", hashtag_count)
