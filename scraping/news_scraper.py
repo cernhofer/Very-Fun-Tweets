@@ -38,7 +38,7 @@ def make_soup(url, **params):
 
 		if status_code == 503:
 			print("Sleeping beauty time.")
-			time.sleep(1200)
+			time.sleep(3600)
 
 	return bs4.BeautifulSoup(response.text, "html5lib")
 
@@ -100,10 +100,10 @@ def scrape_it_good(*args):
 	final_list = []
 
 	key_words_val = check_tf_idf(get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]), get_string_from_list(common_words))
-	
+
 	if ban_twitter:
 		twitter_val = check_tf_idf(get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]))
- 
+
 	for i in range(len(key_words_val[0])):
 		if i != 0:
 			if ban_twitter:
@@ -150,5 +150,3 @@ def run_baby_run(hashtag, dt, common_words):
 
 if __name__ == "__main__":
 	run_baby_run('supergirl', ['2017-03-06', '2017-02-27'], [['alex', 'musical', 'episode'], ['alex', 'episode', 'supergirl']])
-
-
