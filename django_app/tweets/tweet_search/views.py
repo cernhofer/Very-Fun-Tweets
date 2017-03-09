@@ -13,11 +13,15 @@ def index(request):
 def results(request):
 	search_term = request.GET.get('search_term')
 
+	simple_context = {
+	'search_term': search_term,
+	}
+
 	hashtag_data = None
 	try:
 		hashtag_data = Hashtag.objects.get(name=search_term)
 	except ObjectDoesNotExist:
-		return render(request, 'tweet_search/no_results.html')
+		return render(request, 'tweet_search/no_results.html', simple_context)
 
 	context = {
 		'search_term': search_term,
