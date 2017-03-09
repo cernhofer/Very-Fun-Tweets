@@ -69,6 +69,8 @@ def get_article_text(link):
 	for tag in p_tags:
 		link_text += tag.text
 
+	if link_text == '':
+		return None
 	return link_text
 
 def get_tf_matrix(tf_set):
@@ -99,10 +101,17 @@ def scrape_it_good(*args):
 
 	final_list = []
 
-	key_words_val = check_tf_idf(get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]), get_string_from_list(common_words))
+	text1 = get_article_text(news_links[0][1])
+	text2 = get_article_text(news_links[1][1])
+	text3 = get_article_text(news_links[2][1])
+
+	if text1 is None or text2 is None or text3 is None:
+		return None
+
+	key_words_val = check_tf_idf(text1, text2, text3, get_string_from_list(common_words))
 
 	if ban_twitter:
-		twitter_val = check_tf_idf(get_article_text(news_links[0][1]), get_article_text(news_links[1][1]), get_article_text(news_links[2][1]))
+		twitter_val = check_tf_idf(text1, text2, text3)
 
 	for i in range(len(key_words_val[0])):
 		if i != 0:

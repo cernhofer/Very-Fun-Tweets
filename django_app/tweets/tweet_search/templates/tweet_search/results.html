@@ -79,7 +79,7 @@ $(function () {
           {% for story in hashtag_data.story_set.all%}
             {% if tweet_bucket.formatted_timestamp == story.formatted_timestamp %}
               q: '{{ story.url }}', 
-              label: '{{ story.headline }}',
+              label: '{{ story.clean_headline }}',
             {% endif %}
           {% endfor %}
         },
