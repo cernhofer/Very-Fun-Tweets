@@ -1,7 +1,8 @@
 from push_to_postgres import push_to_postgres
 from scraping.news_scraper import run_baby_run
 from scraping.tweet_scraper import run_for_your_life
-from spikes import spikes
+# from spikes import spikes
+from multiple_spikes import spikes
 from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
 import os, json
