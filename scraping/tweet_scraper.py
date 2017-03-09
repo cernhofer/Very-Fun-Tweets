@@ -26,6 +26,8 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'wa
 
 test = ['test', 'test', 'this is a test', 'i am testing this test like a test', 'cool days ahead', 'love days when i test', 'cool cool', 'marsh marsh']
 
+test2 = ['love tests', 'cannot live without the test', 'test is going to be a good word here', 'it is summer?', 'small home big house', 'mouse is in the home house']
+
 tweets_data_path = 'test_data.txt'
 
 def scrape_tweet(word_string, word_list, hashtag):
@@ -40,38 +42,39 @@ def scrape_tweet(word_string, word_list, hashtag):
 							word_list.append(word)
 
 def run_for_your_life(hashtag_list, hashtag):
-	all_words = []
-	num_tweets = len(hashtag_list)
+	#hashtah list = LIST OF LISTS 
+	common_words_list = []
+	for indiv_list in hashtag_list:
 
-	print("there are", num_tweets, "number of tweets in this hashtag!")
+		all_words = []
+		num_tweets = len(indiv_list)
 
+		for tweet_text in indiv_list:
+			scrape_tweet(tweet_text, all_words, hashtag)
 
-	for tweet_text in hashtag_list:
-		scrape_tweet(tweet_text, all_words, hashtag)
+		c = Counter(all_words).most_common(3)
 
-	c = Counter(all_words).most_common(3)
+		word_list = list(c)
 
-	word_list = list(c)
+		common_words = []
+		count = 0
+		for word in word_list:
+			count += word[1]
+			common_words.append(word[0])
 
-	print(word_list)
+		if count/float(num_tweets) > THRESH:
+			common_words_list.append(common_words)
 
-	common_words = []
-	count = 0
-	for word in word_list:
-		count += word[1]
-		common_words.append(word[0])
-
-	if count/float(num_tweets) > THRESH:
-		print(common_words)
-		return common_words
-
-	else:
-		return None
+		else:
+			common_words_list.append(None)
 
 
+	return common_words_list
 
 if __name__ == "__main__":
-	run_for_your_life(test, 'test')
+	thing = run_for_your_life([test, test2], 'test')
+
+	print(thing)
 
 
 
