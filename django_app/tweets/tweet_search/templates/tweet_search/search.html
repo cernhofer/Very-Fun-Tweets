@@ -55,10 +55,10 @@
     // Random left value
     var randomLeft = randomNumberBetween(1, 99);
     element.style.left = randomLeft + '%';
-		element.style.position = ‘fixed’;
+		element.style.position = 'fixed';
 		element.style.top = 0;
 		element.style.opacity = 1;
-		element.style.animation = ‘fall-from-top 4000ms linear both’;
+		element.style.animation = 'fall-from-top 4000ms linear both';
 
     // Append to body
     document.body.appendChild(element);
@@ -88,7 +88,7 @@
     window.addEventListener('resize', createKeyframes);
 
     for (var i = 0; i < 3; i++) { makeFloatingEmoji() }
-    window.setInterval(makeFloatingEmoji, 700);
+    window.setInterval(makeFloatingEmoji, 100);
   });
 })()
 
