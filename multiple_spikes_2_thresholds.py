@@ -5468,9 +5468,9 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
     counts_df.columns = ['count','datestring']
     print(counts_df)
     #counts_df.c
+    '''
 
-
-    # sort the dataframe by date
+    #sort the dataframe by date
     counts_df = counts_df.sort_values(by='datestring')
     counts_df = counts_df.reset_index()
     counts_df = counts_df.drop(['index'],axis = 1)
@@ -5482,7 +5482,7 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
     counts_df['moving_average'] = counts_df.apply (lambda row: moving_average(row), axis=1 )
     counts_df['change'] = counts_df.apply (lambda row: change_avg(row), axis=1 )
     counts_df = counts_df.sort_values(by='change',ascending=False)
-    '''
+
     print(counts_df)
     has_spikes = []
     output={}
@@ -5510,6 +5510,7 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
     #print(spike_dates)
 
     if len(has_spikes)>0:
+        print(counts_df)
         counts_df = insert_missing_data('2017-02-21','2017-02-24',counts_df)
         counts_df = insert_missing_data('2017-02-24','2017-02-27',counts_df)
         tweetbuckets = get_tweetbuckets(counts_df)
