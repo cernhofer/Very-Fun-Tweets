@@ -73,7 +73,7 @@ def get_tweetbuckets(counts_df):
         tweetbuckets.append(dictionary)
     return tweetbuckets
 
-def spikes(sample_hashtag,threshold=0.2,spikes=1):
+def spikes(sample_hashtag,threshold=0.2,spikes=3):
     df = pd.DataFrame.from_dict(sample_hashtag['tweets'])
 
     hashtag = sample_hashtag['hashtag']
