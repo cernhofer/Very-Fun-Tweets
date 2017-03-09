@@ -5514,9 +5514,9 @@ def spikes(sample_hashtag,threshold=0.2,spikes=3):
         output['hashtag'] = hashtag
         output['tweetbuckets'] = tweetbuckets
 
-        return True, spike_dates, output, list_of_list_of_tweets,counts_df
+        return True, spike_dates, output, list_of_list_of_tweets
 
-    return False, None, None, None, counts_df
+    return False, None, None, None
 
 
 def insert_missing_data(start_date, end_date, counts_df):
