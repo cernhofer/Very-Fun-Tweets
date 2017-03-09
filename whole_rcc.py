@@ -1,7 +1,6 @@
 from push_to_postgres import push_to_postgres
 from scraping.news_scraper import run_baby_run
 from scraping.tweet_scraper import run_for_your_life
-# from spikes import spikes
 from multiple_spikes_2_thresholds import spikes
 from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
@@ -24,7 +23,6 @@ for hashtag in hashtags:
 
     if len(hashtag['tweets']) < 1000: continue
 
-    print("Here is Sush!")
     has_spike, date_list, spike_data, tweet_text_list = spikes(hashtag)
 
     if has_spike:
