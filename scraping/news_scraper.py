@@ -137,7 +137,7 @@ def run_baby_run(hashtag, dt, common_words):
 		args_to_pass = (hashtag, common_words[i], month, start, end, year)
 		title, url = scrape_it_good(*args_to_pass)
 		if title is None:
-			return None
+			continue
 		story_dict = {'timestamp': date, 'url': url, 'headline': title}
 		to_return.append(story_dict)
 
