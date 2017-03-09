@@ -23,7 +23,7 @@ for hashtag in hashtags:
     if len(hashtag['tweets']) < 1000: continue
 
     print("Here is Sush!")
-    has_spike, date_list, spike_data, tweet_text_list = spikes(hashtag)
+    has_spike, date_list, spike_data, tweet_text_list = multiple_spikes(hashtag)
 
     if has_spike:
         print("SPIKE!")
