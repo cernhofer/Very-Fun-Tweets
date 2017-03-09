@@ -80,11 +80,28 @@ $(function () {
         {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
         {
           x: Date.parse('{{ tweet_bucket.formatted_timestamp }}'),
-          y: {{ tweet_bucket.count }},
-          q: 'https://google.com'
+          y: {{ tweet_bucket.count }}
         },
         {% endfor %}
       ]
+    },
+    {
+      type: 'scatter', 
+      marker: {
+        symbol:'url(http://www.highcharts.com/demo/gfx/sun.png)',
+        width: 16, 
+        height: 16
+      },
+    data: [
+        {% for story in hashtag_data.story_set.all %}
+        {
+          x: Date.parse('{{ story.formatted_timestamp }}'),
+          y: 1000,
+          q: '{{story.url}}'
+        },
+        {% endfor %}
+      ]
+
     }]
   });
 });
