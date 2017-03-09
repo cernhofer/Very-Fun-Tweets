@@ -140,8 +140,11 @@ def run_baby_run(hashtag, dt, common_words):
 		story_dict = {'timestamp': date, 'url': url, 'headline': title}
 		to_return.append(story_dict)
 
-	print("\n\nNEWS ARTICLE:", to_return)
-	return to_return
+	if to_return == []:
+		return None
+	else:
+		print("\n\nNEWS ARTICLE:", to_return)
+		return to_return
 
 
 
