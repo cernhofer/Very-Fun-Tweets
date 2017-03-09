@@ -48,11 +48,11 @@ $(function () {
                         enabled: true
                     }
                 }
-        },    
+        },
       cursor: 'pointer',
         point: {
             events: {
-                click: function() { 
+                click: function() {
                   {% if this.option.label != "" %}
                     window.open(this.options.q)
                   {% endif %}
@@ -73,8 +73,9 @@ $(function () {
           label: "",
           {% for story in hashtag_data.story_set.all%}
             {% if tweet_bucket.formatted_timestamp == story.formatted_timestamp %}
-              q: '{{ story.url }}', 
+              q: '{{ story.url }}',
               label: '{{ story.headline }}',
+              marker: {symbol: 'url(http://emojipedia-us.s3.amazonaws.com/cache/29/1e/291e8fa842dc88d96a03fc553bfc4000.png)',
             {% endif %}
           {% endfor %}
         },
