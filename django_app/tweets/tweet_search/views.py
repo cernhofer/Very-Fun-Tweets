@@ -17,7 +17,7 @@ def results(request):
 	try:
 		hashtag_data = Hashtag.objects.get(name=search_term)
 	except ObjectDoesNotExist:
-		pass
+		return render(request, 'tweet_search/no_results.html')
 
 	context = {
 		'search_term': search_term,
