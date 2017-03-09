@@ -1,34 +1,20 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
 
-<div class="container">
-  <h1>RESULTS #{{ search_term }}</h1>
 
-  <p>You searched for {{ search_term }}</p>
+  <div class="container">
+    <h1>RESULTS #{{ search_term }}</h1>
 
-  <div id="chart"></div>
+    <p>You searched for {{ search_term }}</p>
 
-  <h2>Tweet buckets</h2>
-  <ul>
-    {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
-      <li>
-      <li>{{ tweet_bucket.timestamp }} - {{ tweet_bucket.count }}</li>
-    {% endfor %}
-  </ul>
+    <div id="chart"></div>
 
-  <h2>Stories</h2>
-  <ul>
-    {% for story in hashtag_data.story_set.all %}
-      <li>{{ story.timestamp }} - <a href="{{ story.url }}"> {{ story.url }}</a> -- {{ story.headline }}</li>
-      var link = <a href="{{ story.url }}"> {{ story.url }}</a>
-    {% endfor %}
-  </ul>
-</div>
+  </div>
+
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 
 <script>
-
 
 $(function () {
   var myChart = Highcharts.chart('chart', {
@@ -64,50 +50,41 @@ $(function () {
       cursor: 'pointer',
         point: {
             events: {
-                click: function() {
-                  window.open(this.options.q, '_blank')
-        }
+                click: function() { 
+                  {% if this.option.label != "" %}
+                    window.open(this.options.q)
+                  {% endif %}
+                }
               }
             }
         }
-    
     },
     series: [{
       tooltip: {
-        pointFormat: '<span style="color:{point.color}">\u25CF</span><b>{point.y}</b><br/><b>{{story.headline}}</b><br/>'
+        pointFormat: '<b>{point.label}</b><br/><b>count:  {point.y}</b><br/>'
       },
       data: [
         {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
         {
           x: Date.parse('{{ tweet_bucket.formatted_timestamp }}'),
-          y: {{ tweet_bucket.count }}
+          y: {{ tweet_bucket.count }},
+          label: "",
+          {% for story in hashtag_data.story_set.all%}
+            {% if tweet_bucket.formatted_timestamp == story.formatted_timestamp %}
+              q: '{{ story.url }}', 
+              label: '{{ story.headline }}',
+            {% endif %}
+          {% endfor %}
         },
         {% endfor %}
       ]
-    },
-    {
-      type: 'scatter', 
-      marker: {
-        symbol:'url(http://www.highcharts.com/demo/gfx/sun.png)',
-        width: 16, 
-        height: 16
-      },
-    data: [
-        {% for story in hashtag_data.story_set.all %}
-        {
-          x: Date.parse('{{ story.formatted_timestamp }}'),
-          y: 1000,
-          q: '{{story.url}}'
-        },
-        {% endfor %}
-      ]
-
     }]
   });
 });
+
 </script>
 
 
-<div style="margin-left: auto; margin-right:auto; width:700px;">
+<div style="margin-left: auto; margin-right:auto; width:1000px;">
   <h4> <a href="./"> TRY ANOTHER SEARCH </a> </h4>
 </div>
