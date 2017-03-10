@@ -105,7 +105,7 @@ def scrape_it_good(*args):
 	text3 = get_article_text(news_links[2][1])
 
 	if text1 is None or text2 is None or text3 is None:
-		return None
+		return None, None
 
 	key_words_val = check_tf_idf(text1, text2, text3, get_string_from_list(common_words))
 
