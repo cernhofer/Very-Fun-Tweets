@@ -46,6 +46,7 @@ def make_soup(url, **params):
 			print("Just taking a power nap so I don't get grumpy.")
 			time.sleep(300)
 
+	print("Returning now, bye!")
 	return bs4.BeautifulSoup(response.text, "html5lib")
 
 def get_news_url(div):
