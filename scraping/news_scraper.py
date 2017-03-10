@@ -71,11 +71,12 @@ def get_article_text(link):
 		return None
 
 	for tag in p_tags:
-		if tag.text is not None:
+		if tag.text:
 			link_text += tag.text
 
 	if link_text == '':
 		return None
+		
 	return link_text
 
 def get_tf_matrix(tf_set):
