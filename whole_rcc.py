@@ -16,7 +16,7 @@ db = client[DATABASE_NAME]
 hashtag_count = 0
 
 # as number increases use: .skip(int)
-hashtags = db.tweets.find({}).skip(512)
+hashtags = db.tweets.find({}).skip(557)
 for hashtag in hashtags:
     hashtag_count += 1
     print("\n\n\nThis is hashtag number", hashtag_count)
@@ -26,7 +26,7 @@ for hashtag in hashtags:
     has_spike, date_list, spike_data, tweet_text_list = spikes(hashtag)
 
     if has_spike:
-        print("SPIKE!")
+        print("SPIKE!!")
         hashtag_name = spike_data['hashtag']
         print(hashtag_name)
 
