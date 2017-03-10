@@ -36,6 +36,9 @@ def results(request):
 def search(request):
 	return render(request, 'tweet_search/search.html')
 
+def about(request):
+	return render(request, 'tweet_search/about.html')
+
 
 def populate(request):
 	if request.method == 'GET':
