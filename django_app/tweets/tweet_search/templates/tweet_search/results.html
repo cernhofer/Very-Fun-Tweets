@@ -70,6 +70,7 @@ $(function () {
       },
       data: [
         {% for tweet_bucket in hashtag_data.tweetbucket_set.all %}
+        {% if tweet_bucket.formatted_timestamp != "2017-02-23" and tweet_bucket.formatted_timestamp != "2017-02-25" %}
         {
           x: Date.parse('{{ tweet_bucket.formatted_timestamp }}'),
           y: {{ tweet_bucket.count }},
@@ -85,6 +86,7 @@ $(function () {
             {% endif %}
           {% endfor %}
         },
+        {% endif %}
         {% endfor %}
       ]
     }]
