@@ -87,8 +87,7 @@ def check_tf_idf(doc1, doc2, doc3, terms= TWITTER_WORDS):
 def scrape_it_good(*args):
 	ban_twitter = True
 	hashtag, common_words, month, start_date, end_date, year = args
-	query = get_query(hashtag, ban_twitter)
-	soup = make_soup(URL, query=query, month=month, start_date=start_date, end_date=end_date, year=year)
+	soup = make_soup(URL, query=hashtag, month=month, start_date=start_date, end_date=end_date, year=year)
 	divs = soup.find_all("div", class_ = "_cnc")
 	divs += soup.find_all("div", class_ = "_hnc card-section")
 	news_links = get_news_url(divs)
