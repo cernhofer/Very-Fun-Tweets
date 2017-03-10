@@ -13,7 +13,7 @@ URL = 'https://www.google.com/search?cf=all&hl=en&pz=1&ned=en_ph&tbm=nws&gl=ph&a
 TWITTER_WORDS = 'twitter hashtag trending tweeted tweet'
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'}
 
-
+'''
 def get_query(input_query, ban_word):
 	return_query = ''
 	if len(input_query) > 1:
@@ -29,6 +29,7 @@ def get_query(input_query, ban_word):
 		return_query = input_query[0]
 
 	return return_query
+'''
 
 def make_soup(url, **params):
 	status_code = 503
@@ -86,8 +87,7 @@ def check_tf_idf(doc1, doc2, doc3, terms= TWITTER_WORDS):
 def scrape_it_good(*args):
 	ban_twitter = True
 	hashtag, common_words, month, start_date, end_date, year = args
-	search_words = [hashtag] + common_words
-	query = get_query(search_words, ban_twitter)
+	query = get_query(hashtag, ban_twitter)
 	soup = make_soup(URL, query=query, month=month, start_date=start_date, end_date=end_date, year=year)
 	divs = soup.find_all("div", class_ = "_cnc")
 	divs += soup.find_all("div", class_ = "_hnc card-section")
