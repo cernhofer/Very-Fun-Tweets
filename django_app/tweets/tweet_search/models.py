@@ -26,6 +26,7 @@ class Story(models.Model):
 
     def clean_headline(self):
         cleaned = self.headline.replace("'", "")
+        cleaned = cleaned.replace("&", "and")
         return cleaned
 
     class Meta:
