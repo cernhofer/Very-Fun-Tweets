@@ -13,6 +13,9 @@ def index(request):
 def results(request):
 	search_term = request.GET.get('search_term')
 
+	if search_term.startswith('#'):
+		search_term = search_term[1:]
+
 	simple_context = {
 	'search_term': search_term,
 	}
