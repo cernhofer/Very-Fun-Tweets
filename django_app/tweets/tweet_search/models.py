@@ -1,4 +1,5 @@
 from django.db import models
+import html.parser as htmlparser
 
 class Hashtag(models.Model):
     name = models.CharField(max_length=140)
@@ -22,6 +23,10 @@ class Story(models.Model):
 
     def formatted_timestamp(self):
         return self.timestamp.strftime("%Y-%m-%d")
+
+    def clean_headline(self):
+        cleaned = self.headline.replace("'", "")
+        return cleaned
 
     class Meta:
         ordering = ('timestamp',)

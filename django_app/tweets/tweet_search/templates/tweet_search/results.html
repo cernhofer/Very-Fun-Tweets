@@ -78,7 +78,7 @@ $(function () {
           {% for story in hashtag_data.story_set.all%}
             {% if tweet_bucket.formatted_timestamp == story.formatted_timestamp %}
               q: '{{ story.url }}',
-              label: '{{ story.headline }}',
+              label: '{{ story.clean_headline }}',
               marker: {symbol: 'url(http://emojipedia-us.s3.amazonaws.com/cache/29/1e/291e8fa842dc88d96a03fc553bfc4000.png)',
               width: 40,
               height: 40,
