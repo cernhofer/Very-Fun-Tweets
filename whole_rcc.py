@@ -26,7 +26,7 @@ for hashtag in hashtags:
     has_spike, date_list, spike_data, tweet_text_list = spikes(hashtag)
 
     if has_spike:
-        print("SPIKE!")
+        print("SPIKE!!")
         hashtag_name = spike_data['hashtag']
         print(hashtag_name)
 
