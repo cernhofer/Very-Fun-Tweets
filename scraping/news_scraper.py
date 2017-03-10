@@ -38,9 +38,11 @@ def make_soup(url, **params):
 		status_code = response.status_code
 
 		if status_code == 503:
+			print(status_code)
 			print("Status code is 503. Be up in thirty minutes.")
 			time.sleep(1800)
 		else:
+			print(status_code)
 			print("Just taking a power nap so I don't get grumpy.")
 			time.sleep(300)
 
