@@ -13,6 +13,8 @@ def index(request):
 def results(request):
 	search_term = request.GET.get('search_term')
 
+	search_term = search_term.lower()
+
 	if search_term.startswith('#'):
 		search_term = search_term[1:]
 

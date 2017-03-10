@@ -19,7 +19,7 @@
 
 
   <div class="container">
-    <h1>RESULTS #{{ search_term }}</h1>
+    <h1 style = "margin-bottom: 50px">RESULTS #{{ search_term }}</h1>
 
     <div id="chart"></div>
     <div style="margin-left: auto; margin-right:auto; width:1000px;">
@@ -39,7 +39,7 @@ $(function () {
       type: 'spline'
     },
     title: {
-      text: '#{{ hashtag_data.name }} over time'
+      text: ''
     },
     legend: {
       enabled: false,
