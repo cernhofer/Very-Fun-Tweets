@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<head>
-	<link rel="shortcut icon" href="http://emojipedia-us.s3.amazonaws.com/cache/ab/77/ab7774e9818de3e23a307af6989b65b2.png" type="image/x-icon" />
-	<title>VERY FUN TWEETS</title>
-</head>
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
 
@@ -15,7 +11,6 @@
 <html>
 
 <body>
-
 
 <div style="margin-left: auto; margin-right:auto; width:700px;">
 
@@ -31,68 +26,6 @@
 
 </div>
 
-<script>
-
-(function () {
-  var EMOJI = [
-    '🐙', '🐝', '🌴', '🌵', '🍊', '🍉', '🌮', '🍟', '🍦', '🏈', '💸', '🇺🇸', '🇨🇦',
-    '💖', '🎈', '👩‍🔬', '⚽️', '🎷', '👩‍🚀', '🍕', '🍍', '🥑', '🐳', '🦄', '👰', '👻', '🐶',
-    '🐷', '🐳', '🐚', '🔥', '✨', '🍳', '🍿', '💰', '💾', '💝', '💿', '🌈'
-  ];
-
-  function makeFloatingEmoji() {
-    // Create the element
-    var element = document.createElement('div');
-    element.classList.add('floating-emoji');
-
-    // Add an emoji
-    element.innerHTML = EMOJI[Math.floor(Math.random()*EMOJI.length)];;
-
-    // Make it fall for a randomish amount of time
-    var randomDuration = randomNumberBetween(7500, 10000);
-    element.style.animationDuration = randomDuration + 'ms';
-
-    // Random left value
-    var randomLeft = randomNumberBetween(1, 99);
-    element.style.left = randomLeft + '%';
-		element.style.position = 'fixed';
-		element.style.top = 0;
-		element.style.opacity = 1;
-		element.style.animation = 'fall-from-top 4000ms linear both';
-
-    // Append to body
-    document.body.appendChild(element);
-
-    // Fade out and remove the element
-    window.setTimeout(function () {document.body.removeChild(element)}, randomDuration);
-  }
-
-  function randomNumberBetween(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  var currentKeyframes = null;
-  function createKeyframes() {
-    var keyframe = document.createElement('style');
-    keyframe.innerHTML = "@keyframes fall-from-top { \n\
-      0% { transform: translateY(-30px); } \n\
-      100% { transform: translateY(" + (window.innerHeight + 10) + "px); } \n\
-    }";
-
-    if (currentKeyframes !== null) { document.head.removeChild(currentKeyframes) }
-    document.head.appendChild(keyframe);
-  }
-
-  document.addEventListener("DOMContentLoaded", function(event) {
-    createKeyframes();
-    window.addEventListener('resize', createKeyframes);
-
-    for (var i = 0; i < 3; i++) { makeFloatingEmoji() }
-    window.setInterval(makeFloatingEmoji, 200);
-  });
-})()
-
-</script>
 
 
  </body>
