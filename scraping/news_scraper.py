@@ -38,8 +38,11 @@ def make_soup(url, **params):
 		status_code = response.status_code
 
 		if status_code == 503:
-			print("Sleeping beauty time.")
+			print("Status code is 503. Be up in thirty minutes.")
 			time.sleep(1800)
+		else:
+			print("Just taking a power nap so I don't get grumpy.")
+			time.sleep(300)
 
 	return bs4.BeautifulSoup(response.text, "html5lib")
 
@@ -76,7 +79,7 @@ def get_article_text(link):
 
 	if link_text == '':
 		return None
-		
+
 	return link_text
 
 def get_tf_matrix(tf_set):
