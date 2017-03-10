@@ -67,8 +67,12 @@ def get_article_text(link):
 	link_text = ''
 	link_soup = make_soup(link)
 	p_tags = link_soup.find_all("p")
+	if p_tags is None:
+		return None
+
 	for tag in p_tags:
-		link_text += tag.text
+		if tag.text is not None:
+			link_text += tag.text
 
 	if link_text == '':
 		return None
