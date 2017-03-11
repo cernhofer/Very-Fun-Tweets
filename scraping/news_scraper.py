@@ -70,20 +70,23 @@ def get_string_from_list(list_tostring):
 	return final_string
 
 def get_article_text(link):
-	link_text = ''
-	link_soup = make_soup(link)
-	p_tags = link_soup.find_all("p")
-	if p_tags is None:
+	try:
+		link_text = ''
+		link_soup = make_soup(link)
+		p_tags = link_soup.find_all("p")
+		if p_tags is None:
+			return None
+
+		for tag in p_tags:
+			if tag.text:
+				link_text += tag.text
+
+		if link_text == '':
+			return None
+
+		return link_text
+	except:
 		return None
-
-	for tag in p_tags:
-		if tag.text:
-			link_text += tag.text
-
-	if link_text == '':
-		return None
-
-	return link_text
 
 def get_tf_matrix(tf_set):
 	tf_idf_vectorizer = TfidfVectorizer()
