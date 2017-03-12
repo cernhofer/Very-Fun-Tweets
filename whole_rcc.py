@@ -13,7 +13,7 @@ DATABASE_NAME = os.environ.get("DATABASE_NAME")
 client = pymongo.MongoClient(MONGODB_URI)
 db = client[DATABASE_NAME]
 
-total_count = 15962
+total_count = 16992
 hashtag_count = 0
 
 while True:
@@ -22,6 +22,7 @@ while True:
 
         for hashtag in hashtags:
             hashtag_count += 1
+            print("\n\n\nThis is total count", total_count)
             print("\n\n\nThis is hashtag number", hashtag_count)
 
             if len(hashtag['tweets']) < 1000: continue
