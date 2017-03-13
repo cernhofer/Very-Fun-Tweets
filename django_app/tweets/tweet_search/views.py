@@ -70,3 +70,10 @@ def populate(request):
 		s.save()
 
 	return HttpResponse('ok')
+
+def checkup(request):
+	context = {
+		'hashtags': Hashtag.objects.all(),
+	}
+
+	return render(request, 'tweet_search/checkup.html', context)

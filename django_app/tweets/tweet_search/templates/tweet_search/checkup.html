@@ -1,0 +1,7 @@
+<h2># of Hashtags</h2>
+  <h3>{{ hashtags.count }}</h3>
+
+<h2>Hashtags</h2>
+{% for hashtag in hashtags %}
+  <p>{{ hashtag.name }}</p>
+{% endfor %}
