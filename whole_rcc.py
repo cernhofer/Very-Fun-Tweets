@@ -23,7 +23,7 @@ while True:
         for hashtag in hashtags:
             hashtag_count += 1
             print("\n\n\nThis is total count", total_count)
-            print("\n\n\nThis is hashtag number", hashtag_count)
+            print("This is hashtag number", hashtag_count)
 
             if len(hashtag['tweets']) < 1000: continue
 
