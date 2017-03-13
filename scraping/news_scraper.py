@@ -32,21 +32,20 @@ def get_query(input_query, ban_word):
 '''
 
 def make_soup(url, **params):
+	'''
+	Make connection with url, return beautiful soup object, if gets a 503 error,
+	sleep for 30 minutes, other wise sleep for 5 minutes in between each request
+	'''
 	status_code = 503
 	while status_code == 503:
 		response = requests.get(url.format(**params), headers = HEADERS, verify=False)
 		status_code = response.status_code
 
 		if status_code == 503:
-			print(status_code)
-			print("Status code is 503. Be up in thirty minutes.")
 			time.sleep(1800)
 		else:
-			print(status_code)
-			print("Just taking a power nap so I don't get grumpy.")
 			time.sleep(300)
 
-	print("Returning now, bye!")
 	return bs4.BeautifulSoup(response.text, "html5lib")
 
 def get_news_url(div):
