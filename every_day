@@ -1,6 +1,0 @@
-00 12 * * * python3 whole_rcc.py
-
-@daily python3 whole_rcc.py
-
-open: crontab -e
-active: crontab -l
