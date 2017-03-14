@@ -4,6 +4,24 @@
 
 ## [www.veryfuntweets.com](www.veryfuntweets.com)
 
+### Index of Files 
+* streaming_api.py
+	* Connects to Twitter API, streams sample of tweets in mongo database
+	* Constantly running on RCC servers
+* spikes.py  
+	* Detects spikes in hashtag usage- up to 3 per hashtag 
+* scraping folder
+	* tweet_scraper.py - calculates most common words in tweet text 
+	* news_scraper.py - finds relevant news stories by date & hashtag 
+* whole_rcc.py
+	* main script used to pass data from mongo, through spikes and scraping 
+	scripts, and through to postgres
+* push_to_postgres.py 
+	* transfers data from whole_rcc.py into postgres database, in proper format
+* django_app
+	* contains all necessary files to run django application
+	* includes views, templates, and models 
+
 ### Running on Heroku
 * Command to creat a worker dyno and start the stream
   * `heroku ps:scale worker=1`
