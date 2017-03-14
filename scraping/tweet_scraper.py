@@ -20,17 +20,12 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be', 'wa
                     'up', 'us', 'have', 'like', 'when', 'rt', 'go', 'they', 'who', 'do'
                     'just', 'can', 'do', 'dont', 'im', 'she', 'did', 'got', 'today'])
 
-#test is a list of tweet bodies
-
-#scrape out
-
-test = ['test', 'test', 'this is a test', 'i am testing this test like a test', 'cool days ahead', 'love days when i test', 'cool cool', 'marsh marsh']
-
-test2 = ['love tests', 'cannot live without the test', 'test is going to be a good word here', 'it is summer?', 'small home big house', 'mouse is in the home house']
-
-tweets_data_path = 'test_data.txt'
 
 def scrape_tweet(word_string, word_list, hashtag):
+	'''
+	Takes in a string of words, creates a list of words that meet certain 
+	criteria. Returns nothing but updates word_list. 
+	'''
 	for word in re.split('\\s+', word_string):
 		if word != " " and word != "":
 			word = word.lower()
@@ -42,7 +37,12 @@ def scrape_tweet(word_string, word_list, hashtag):
 							word_list.append(word)
 
 def run_for_your_life(hashtag_list, hashtag):
-	#hashtah list = LIST OF LISTS 
+	'''
+	Main function called by outside world. Takes in list of tweet text lists.
+	Parses through list, uses Counter object to find 3 most used words, if even 
+	one group of words (from the list) meets criteria, pass back all lists of
+	common words. 
+	'''
 	return_words = False
 	common_words_list = []
 	for i, indiv_list in enumerate(hashtag_list):
@@ -69,17 +69,11 @@ def run_for_your_life(hashtag_list, hashtag):
 
 		common_words_list.append(common_words)
 
-
-	print("common_words list to be returned:", common_words_list)
 	if return_words:
 		return common_words_list
 	else:
 		return None
 
-if __name__ == "__main__":
-	thing = run_for_your_life([test, test2], 'test')
-
-	print(thing)
 
 
 

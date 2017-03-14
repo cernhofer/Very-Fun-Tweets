@@ -11,6 +11,11 @@ def index(request):
 	return render(request, 'tweet_search/index.html')
 
 def results(request):
+	'''
+	Gets search term from user input, lowers it and removes # just in case!
+	sends context to no_results if fails try, otherwise, send search term 
+	and hashtag data from database into results page
+	'''
 	search_term = request.GET.get('search_term')
 
 	search_term = search_term.lower()

@@ -13,28 +13,11 @@ URL = 'https://www.google.com/search?cf=all&hl=en&pz=1&ned=en_ph&tbm=nws&gl=ph&a
 TWITTER_WORDS = 'twitter hashtag trending tweeted tweet'
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'}
 
-'''
-def get_query(input_query, ban_word):
-	return_query = ''
-	if len(input_query) > 1:
-		for word in input_query:
-			if return_query == '':
-				return_query += word
-			else:
-				return_query += "+" + word
-			if word in TWITTER_WORDS:
-				#if one of the main words/hashtag is about twitter- don't take it out later
-				ban_word = False
-	else:
-		return_query = input_query[0]
-
-	return return_query
-'''
 
 def make_soup(url, **params):
 	'''
-	Make connection with url, return beautiful soup object, if gets a 503 error,
-	sleep for 30 minutes, other wise sleep for 5 minutes in between each request
+	Takes in URL and parameters for string interpolation. Return bs4 object. Sleeps
+	for a little bit every time a query is made and when 503 error is thrown. 
 	'''
 	status_code = 503
 	while status_code == 503:
@@ -49,6 +32,10 @@ def make_soup(url, **params):
 	return bs4.BeautifulSoup(response.text, "html5lib")
 
 def get_news_url(div):
+	'''
+	Takes in div from google news, parses through and finds all a tags. Returns 
+	title of article found and cleaned URL. 
+	'''
 	urls = []
 	for i in range(len(div)):
 		for thing in div[i].find_all("a"):
@@ -62,6 +49,10 @@ def get_news_url(div):
 	return urls
 
 def get_string_from_list(list_tostring):
+	'''
+	Takes in a list and returns a string of elements in the list, separated
+	by a space. 
+	'''
 	final_string = ''
 	for element in list_tostring:
 		final_string += element + ' '
@@ -69,6 +60,10 @@ def get_string_from_list(list_tostring):
 	return final_string
 
 def get_article_text(link):
+	'''
+	Gets and returns article text from p-tags in link provided. If any element 
+	on the webpage isn't found or is None, returns None. 
+	'''
 	try:
 		link_text = ''
 		link_soup = make_soup(link)
@@ -88,16 +83,27 @@ def get_article_text(link):
 		return None
 
 def get_tf_matrix(tf_set):
+	'''
+	Creates Tfidf vector object, vectorizes set passed in 
+	'''
 	tf_idf_vectorizer = TfidfVectorizer()
 	return tf_idf_vectorizer.fit_transform(tf_set)
 
 def check_tf_idf(doc1, doc2, doc3, terms= TWITTER_WORDS):
+	'''
+	creates Tfidf matrix, finds and returns matrix of cosine values
+	'''
     matrix = get_tf_matrix([terms, doc1, doc2, doc3])
     val = cosine_similarity(matrix[0:1], matrix)
 
     return val
 
 def scrape_it_good(*args):
+	'''
+	Takes in parameters for URL string interpolation and common words as parameters.
+	Gets soup object, parses through relevant article texts. With tf_idf values, finds
+	most applicable and least 'twitter obessed' article and return its title and URL. 
+	'''
 	ban_twitter = True
 	hashtag, common_words, month, start_date, end_date, year = args
 	soup = make_soup(URL, query=hashtag, month=month, start_date=start_date, end_date=end_date, year=year)
@@ -139,6 +145,10 @@ def scrape_it_good(*args):
 	return final_list[0][0], final_list[0][1]
 
 def get_date(dt_obj):
+	'''
+	Parses through date string to get individual values of month, date, year.
+	THIS SUCKS I KNOW. Don't hate. 
+	'''
 	print(dt_obj)
 	month = str(dt_obj[6])
 	e_date = dt_obj[8:10]
@@ -148,6 +158,11 @@ def get_date(dt_obj):
 	return year, month, s_date, e_date
 
 def run_baby_run(hashtag, dt, common_words):
+	'''
+	Runs the baby! Main function called from the outside world.  Takes in hashtag,
+	datestring, and common_words list. Calls scrape_it_good for each date and list
+	of common words. Returns formatted dictionary ready to be put in a database! 
+	'''
 	to_return = []
 
 	for i, date in enumerate(dt):
@@ -169,7 +184,3 @@ def run_baby_run(hashtag, dt, common_words):
 		print("\n\nNEWS ARTICLE:", to_return)
 		return to_return
 
-
-
-if __name__ == "__main__":
-	run_baby_run('supergirl', ['2017-03-06', '2017-02-27'], [['alex', 'musical', 'episode'], ['alex', 'episode', 'supergirl']])
