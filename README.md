@@ -2,8 +2,8 @@
 
 ## Chelsea Ernhofer, Sushmita Gopalan, and Haylee Ham
 
-## [www.veryfuntweets.com](www.veryfuntweets.com)
-* To see a current list of searchable hashtags, go to [www.veryfuntweets.com/checkup](wwww.veryfuntweets.com/checkup)
+## [www.veryfuntweets.com](http://www.veryfuntweets.com)
+* To see a current list of searchable hashtags, go to [www.veryfuntweets.com/checkup](http://www.veryfuntweets.com/checkup)
 
 ### Index of Files
 * streaming_api.py
