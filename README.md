@@ -83,3 +83,5 @@ To run mongo, use the `run_mongo` alias (if it exists) or `~/bin/mongodb/bin/mon
  * `heroku run django_app/tweets/manage.py shell`
  * `from tweet_search.models import Hashtag`
  * `Hashtag.objects.all().delete()`
+
+tiny baby test 
